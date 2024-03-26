@@ -1,3 +1,348 @@
 body {
-    background-color: skyblue;
+    background-color: white;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
+
+
+main {
+    flex: 1;
+}
+
+a, a:visited, a:active {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+
+button,
+.button {
+    background-color: #e3001b;
+    border: none;
+    padding: 10px;
+    color: white;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+}
+
+button:hover,
+.button:hover {
+    background-color: #970b13;
+}
+
+
+#centres {
+   display: flex;
+   flex-flow: row wrap;
+    width: 100%;
+}
+
+#centres label{
+    min-width: 90%;
+}
+
+#centres input{
+    min-width: 5%;
+}
+
+/***************** HEADER ***********************/
+
+header {
+    margin-bottom: 30px;
+}
+
+.user_nav {
+    background-color: #e6eff0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 50px;
+}
+
+header nav {
+    padding: 20px;
+}
+
+header a{
+    margin-left: 10px;
+}
+
+header img{
+    height: 80%;
+    margin: 5px;
+}
+
+header a:hover {
+    color: #e3001b;
+    transition: all .2s ease-in-out;
+}
+
+.admin_nav {
+    background-color: #e6eff0;
+    border-top: medium solid #970b13;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 8%;
+    padding: 20px;
+
+}
+
+
+/***************** FOOTER ***********************/
+
+footer {
+    background-color: #e6eff0;
+    flex-shrink: 0;
+    height: 3vh;
+}
+
+
+/***************** HOME ***********************/
+
+.home_container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    gap: 20px 0 ;
+}
+
+.home_card {
+    background-color: #075c68;
+    width: 40vw;
+    height: 200px;
+    padding: 10px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    color: #e6eff0;
+    transition: all .2s ease-in-out;
+    overflow: hidden;
+}
+
+.home_card:hover {
+    color: white;
+
+}
+
+.home_card .icon {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: right;
+    transition: all .4s ease-in-out;
+    margin: 0;
+    width: 100%;
+}
+
+.home_card:hover .icon {
+    margin-left:30px ;
+}
+
+.home_card p {
+    text-align: center;
+}
+
+.home_img {
+    width: 30%;
+}
+
+
+.home_img img {
+    width: 100%;
+    transition: all .4s ease-in-out;
+}
+
+.home_card:hover img {
+    width: 140%;
+}
+
+
+
+
+/***************** CATALOGUE ***********************/
+
+.catalogue_container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: 2vw;
+}
+
+.catalogue_card {
+    background-color: #e6eff0;
+    width: 75vw;
+    padding: 10px 10px 10px 20px;
+    margin-bottom: 20px;
+}
+
+.catalogue_filtres {
+    background-color: #e6eff0;
+    width: 15vw;
+    padding: 15px;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 5px;
+}
+
+.catalogue_filtres h2 {
+    font-size: 1.4rem;
+    margin: 5px;
+}
+
+/***************** DETAILS ***********************/
+
+
+
+.detail_container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: 2vw;
+}
+
+.detail_card {
+    background-color: #e6eff0;
+    width: 40vw;
+    padding: 10px;
+    margin-bottom: 20px;
+
+}
+
+.reservation-container {
+    gap: 2vw;
+}
+
+.carte_container {
+    background-color: #e6eff0;
+    width: 50vw;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.detail_card h2 {
+    text-align: right;
+    margin-top: -20px;
+}
+
+/***************** LOGIN ***********************/
+
+.login-container {
+    background-color: #970b13;
+    width: 100%;
+    height: 97vh;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-card {
+    background-color: #e6eff0;
+    opacity: 85%;
+    width: 40vw;
+    margin: auto;
+    padding: 20px;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 10px;
+    justify-items: center;
+}
+
+
+/***************** ADMIN ***********************/
+
+.admin_table {
+    width: 100%;
+    padding: 10px 10px 10px 20px;
+    margin: auto auto 20px;
+}
+
+thead {
+    background-color: #970b13;
+    color:#e6eff0 ;
+    width: 100%;
+}
+
+.admin_table th {
+    border-bottom: thin solid #970b13;
+}
+
+.admin_container {
+    width: 90vw;
+    margin: auto auto 20px;
+}
+
+.admin_container .button {
+    margin-left: 10%;
+    padding: 20px;
+    justify-items: right;
+}
+
+.admin_form {
+    background-color: #e6eff0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 40px;
+    width: 40vw;
+    margin: auto;
+    border-radius: 10px;
+}
+
+
+.admin_form input,
+.admin_form label,
+.admin_form select{
+    width: 100%;
+    margin: auto;
+}
+.admin_form button{
+    width: 49%;
+}
+
+.admin_form h1 {
+    margin-top: -60px;
+    margin-left: 50px;
+}
+
+/***************** INSCRIPTION ***********************/
+
+.inscription_form {
+    background-color: #e6eff0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 40px;
+    width: 50vw;
+    margin: auto;
+    border-radius: 10px;
+}
+
+.inscription_form input,
+.inscription_form button,
+.inscription_form label{
+    width: 100%;
+    margin: auto;
+}
+.inscription_form button{
+    margin-top: 30px;
+}
+
+.inscription_form h1 {
+    margin-top: -60px;
+    margin-left: 50px;
+}
+
+
+#075c68
+#970b13
+#e3001b
+#17363a
+#e6eff0
+
+

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
@@ -12,6 +12,44 @@
         {% endblock %}
     </head>
     <body>
+    {% if app.user %}
+    <header>
+        <div class="user_nav">
+            <a href="{{ path('app_home') }}"><img src="{{ asset('image/vecteezy_3d-illustration-icone-conception-de-metallique-orange-image_25225293.png') }}" alt=""></a>
+            <nav>
+                <a href="{{ path('app_home') }}">Accueil</a>
+                <a href="{{ path('app_vehicule_catalogue') }}">Véhicules</a>
+                <a href="{{ path('app_pc_catalogue') }}">Ordinateurs</a>
+                <a href="{{ path('app_flottes_catalogue') }}">Flottes de PC</a>
+                <a href="{{ path('app_kit_catalogue') }}">Kits</a>
+                <a href="{{ path('app_salles_reunion') }}">Salles de réunion</a>
+                <a href="{{ path('app_salles_cours') }}">Salle de cours</a>
+
+                {% if is_granted("ROLE_ADMIN") %}
+                <a>Administration</a>
+                {% endif %}
+
+                <a href="{{ path('app_logout') }}">Se deconnecter</a>
+            </nav>
+        </div>
+        {% if is_granted("ROLE_ADMIN")%}
+        <nav class="admin_nav">
+            <a href="{{ path('app_register') }}">Inscription</a>
+            <a href="{{ path('app_admin_vehicules') }}">Gestion Vehicules</a>
+            <a href="{{ path('app_admin_materiel', {'categorie': 'ordinateur'}) }}">Gestion PC</a>
+            <a href="{{ path('app_admin_materiel', {'categorie': 'Flotte de PC'}) }}">Gestion Flottes</a>
+            <a href="{{ path('app_admin_materiel', {'categorie': 'Kit de Simulation'}) }}">Gestion Kits</a>
+            <a href="{{ path('app_admin_salles') }}">Gestion Salles</a>
+        </nav>
+        {% endif %}
+
+    </header>
+    {% endif %}
+    <main>
         {% block body %}{% endblock %}
+    </main>
+    <footer>
+        footer
+    </footer>
     </body>
 </html>
