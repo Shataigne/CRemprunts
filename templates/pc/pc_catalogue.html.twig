@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ordinateurs{% endblock %}
+{% block body %}
+    <div class="catalogue_container">
+        <div class="catalogue_filtres">
+            <h2>Filtres :</h2>
+            {{ form_start(form) }}
+            {{form_row(form.q) }}
+            {{form_row(form.centres) }}
+            {{form_row(form.dispoNow) }}
+            <button>Filtrer</button>
+            {{ form_end(form) }}
+        </div>
+
+        <div>
+            <div>
+                {% if pcs is not empty %}
+        {% for pc in pcs %}
+            <a href="{{ path('app_pc_details', {'id': pc.id}) }}">
+                <div class="catalogue_card">
+                    <h2>{{ pc.libelle }}</h2>
+                    {{ pc.centre.libelle }}
+                </div>
+            </a>
+
+        {% endfor %}
+        {% else %}
+            <div class="catalogue_card">
+                Rien ne correspond à votre recherche !
+            </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

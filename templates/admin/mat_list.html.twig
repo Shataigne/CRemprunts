@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% block title %}liste {{ categorie }}{% endblock %}
+
+{% block body %}
+    <div class="admin_container">
+        <table class="admin_table">
+            <thead>
+            <tr>
+                <th>{{categorie}}</th>
+                {% if categorie != "Kit de Simulation" %}<th>Marque</th>
+                    <th>Modèle</th>{% endif %}
+                <th>Centre</th>
+                <th  colspan="2">Administration</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for materiel in materiels %}
+                <tr>
+                    <th>{{ materiel.libelle }}</th>
+                    {% if categorie != "Kit de Simulation" %}<th>{{ materiel.marque.libelle }}</th>
+                        <th>{{ materiel.modele }}</th>{% endif %}
+                    <th>{{ materiel.centre.libelle }}</th>
+                    <th><a href="{{ path('app_admin_materiel_modifier', {'categorie': categorie, 'id': materiel.id}) }}"><button>Modifier</button></a></th>
+                    <th><a href="{{ path('app_admin_materiel_supprimer',{'categorie': categorie, 'id': materiel.id}) }}" onclick="confirm('Êtes-vous sûr de vouloir suprrimer ?')"><button>Supprimer</button></a></th>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('app_admin_materiel_create', {'categorie': categorie}) }}"><button class="button">Ajouter un {{ categorie }}</button></a>
+    </div>
+
+{% endblock %}
+
+

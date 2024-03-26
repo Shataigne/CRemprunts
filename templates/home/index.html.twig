@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <div class="home_container">
+        <a href="{{ path('app_vehicule_catalogue') }}"><div class="home_card" >
+            <div>
+                <h2>Vehicules</h2>
+                <p>description</p>
+                <p class="icon">></p>
+            </div>
+            <div  class="home_img">
+                <img src="{{ asset('image/vecteezy_3d-illustration-icone-conception-de-metallique-orange-image_25225293.png') }}">
+            </div>
+        </div></a>
+        <a href="{{ path('app_kit_catalogue') }}">
+            <div class="home_card">
+                <div>
+                    <h2>Kit de simulation</h2>
+                    <p>description</p>
+                    <p class="icon">></p>
+                </div>
+                <div class="home_img">
+                    <img src="{{ asset('image/vecteezy_3d-illustration-icone-conception-de-metallique-orange-image_25225293.png') }}">
+                </div>
+            </div>
+        </a>
+        <a href="{{ path('app_pc_catalogue') }}">
+        <div class="home_card">
+            <div>
+                <h2>Ordinateurs</h2>
+                <p>description</p>
+                <p class="icon">></p>
+            </div>
+            <div class="home_img">
+                <img src="{{ asset('image/vecteezy_3d-illustration-icone-conception-de-metallique-orange-image_25225293.png') }}">
+            </div>
+        </div>
+        </a>
+        <a href="{{ path('app_flottes_catalogue') }}">
+        <div class="home_card">
+            <div>
+                <h2>Flottes de PC</h2>
+                <p>description</p>
+                <p class="icon">></p>
+            </div>
+            <div class="home_img">
+                <img src="{{ asset('image/vecteezy_3d-illustration-icone-conception-de-metallique-orange-image_25225293.png') }}">
+            </div>
+        </div>
+        </a>
+        <a href="{{ path('app_salles_cours') }}">
+        <div class="home_card">
+            <div>
+                <h2>Salle de cours</h2>
+                <p>description</p>
+                <p class="icon">></p>
+            </div>
+            <div class="home_img">
+                <img src="{{ asset('image/vecteezy_3d-illustration-icone-conception-de-metallique-orange-image_25225293.png') }}">
+            </div>
+        </div>
+        </a>
+        <a href="{{ path('app_salles_reunion') }}">
+        <div class="home_card">
+            <div>
+                <h2>salle de réunion</h2>
+                <p>description</p>
+                <p class="icon">></p>
+            </div>
+            <div class="home_img">
+                <img src="{{ asset('image/vecteezy_3d-illustration-icone-conception-de-metallique-orange-image_25225293.png') }}">
+            </div>
+        </div>
+        </a>
+    </div>
+{% endblock %}

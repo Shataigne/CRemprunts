@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+{% block title %}details{% endblock %}
+
+
+{% block body %}
+    <div class="detail_container">
+        <div>
+            <div class="detail_card">
+                <h2> Salle n {{ salle.numero }}</h2>
+                {{ salle.centre }}
+            </div>
+
+            <div class="reservation-container">
+                <form method="post" action="{{ path('app_salles_details', {'id': salle.id,'action': 'heure'}) }}" class="detail_card">
+                    <h3>Par heure :</h3>
+                    <div>
+                        <label for="h_date">date :</label>
+                        <input id="h_date" name="h_date" type="date" value="{{ date('now')|date('Y-m-d') }}" min="{{ date('now')|date('Y-m-d') }}">
+                        <br>
+                        <label for="h_heureDebut">Heure de début :</label>
+                        <select id="h_heureDebut" name="h_heureDebut">
+                            {% for hour in 7..19 %}
+                                {# Formatage de l'heure avec deux chiffres #}
+                                {% set formattedHour = hour|format('%02d') %}
+                                {# Affichage de l'option #}
+                                <option value="{{ formattedHour }}:00">{{ formattedHour }}:00</option>
+                            {% endfor %}
+                        </select>
+                        <label for="h_heureFin">Heure de fin :</label>
+                        <select id="h_heureFin" name="h_heureFin">
+                            {% for hour in 7..19 %}
+                                {# Formatage de l'heure avec deux chiffres #}
+                                {% set formattedHour = hour|format('%02d') %}
+                                {# Affichage de l'option #}
+                                <option value="{{ formattedHour }}:00">{{ formattedHour }}:00</option>
+                            {% endfor %}
+                        </select>
+                        <br>
+                        <input type="submit" value="reserver" class="button">
+                    </div>
+
+                </form>
+                <form method="post" action="{{ path('app_salles_details', {'id': salle.id,'action': 'jour'}) }}" class="detail_card">
+                    <h3>Pour une journée :</h3>
+
+                    <div>
+                        <label for="j_date">date :</label>
+                        <input id="j_date" name="j_date" type="date" value="{{ date('now')|date('Y-m-d') }}" min="{{ date('now')|date('Y-m-d') }}">
+                        <br>
+                        <input type="submit" value="reserver" class="button">
+                    </div>
+                </form>
+                <form method="post" action="{{ path('app_salles_details', {'id': salle.id,'action': 'long'}) }}" class="detail_card">
+                    <h3>Pour une période plus longue :</h3>
+                    <div>
+                        <label for="l_dateDebut">date debut :</label>
+                        <input id="l_dateDebut" name="l_dateDebut" type="date" value="{{ date('now')|date('Y-m-d') }}" min="{{ date('now')|date('Y-m-d') }}">
+                        <br>
+                        <label for="l_dateFin">date fin :</label>
+                        <input id="l_dateFin" name="l_dateFin" type="date" min="{{ date('now').modify('+1 day')|date('Y-m-d') }}" >
+                        <br>
+                        <input type="submit" value="reserver" class="button">
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="carte_container">
+            Carte
+            {% for emprunt in salle.empruntSalles %}
+                {{ emprunt.dateDebut|date('Y-m-d')  }}
+                {{ emprunt.dateFin|date('Y-m-d')  }}
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

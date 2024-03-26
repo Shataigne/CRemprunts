@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block title %}liste vehicules{% endblock %}
+
+{% block body %}
+    <div class="admin_container">
+        <table class="admin_table">
+            <thead>
+                <tr>
+                    <th>Véhicule</th>
+                    <th>Marque</th>
+                    <th>Modèle</th>
+                    <th>Centre</th>
+                    <th  colspan="2">Administration</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for vehicule in vehicules %}
+                <tr>
+                        <th>{{ vehicule.libelle }}</th>
+                        <th>{{ vehicule.marque.libelle }}</th>
+                        <th>{{ vehicule.modele }}</th>
+                        <th>{{ vehicule.centre.libelle }}</th>
+                        <th><a href="{{ path('app_admin_vehicules_modifier', {'id': vehicule.id}) }}"><button>Modifier</button></a></th>
+                <th><a href="{{ path('app_admin_vehicules_supprimer', {'id': vehicule.id}) }}" onclick="confirm('Êtes-vous sûr de vouloir supprimer ce véhicule ?')"><button>Supprimer</button></a></th>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('app_admin_vehicules_create') }}"><button class="button">Ajouter un véhicule</button></a>
+    </div>
+
+{% endblock %}
+
+
+

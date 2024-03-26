@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% block title %}Modification Véhicule{% endblock %}
+{% block body %}
+    {{ form_start(form) }}
+    <div class="admin_form">
+        {{ form_row(form.libelle) }}
+        {{ form_row(form.modele) }}
+        {{ form_row(form.marque) }}
+        {{ form_row(form.plaque) }}
+        {{ form_row(form.centre) }}
+        <div>
+            <button type="submit">Modifier</button>
+            <a href="{{ path('app_admin_vehicules') }}"><button>Annuler</button></a>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+
+

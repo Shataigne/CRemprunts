@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+{% block title %}liste Utilisateur{% endblock %}
+
+{% block body %}
+    <div class="admin_container">
+        <table class="admin_table">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Poste</th>
+                <th>role</th>
+                <th  colspan="2">Administration</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <th>{{ user.nom }}</th>
+                    <th>{{ user.prenom }}</th>
+                    <th>{{ user.email }}</th>
+                    <th>{{ user.poste }}</th>
+                    <th>
+                    {% if user.roles is defined and 'ROLE_ADMIN' in user.roles %}
+                        Administrateur
+                    {% elseif user.roles is defined and 'ROLE_LOUEUR' in user.roles%}
+                        Emprunteur
+                    {% else %}
+                        Observateur
+                    {% endif %}
+                    </th>
+                    <th><a href="{{ path('app_admin_profil_modification', {'id': user.id}) }}"><button>Modifier</button></a></th>
+                    <th><a href="#" onclick="if(confirm('Êtes-vous sûr de vouloir supprimer ?')) { window.location.href='{{ path('app_admin_profil_supprimer', {'id': user.id}) }}' }">
+                            <button>Supprimer</button>
+                        </a></th>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('app_register') }}"><button class="button">Ajouter un utilisateur</button></a>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block title %}Modification Profil{% endblock %}
+{% block body %}
+    {{ form_start(form) }}
+    <div class="admin_form">
+        {{ form_row(form.nom) }}
+        {{ form_row(form.prenom) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.poste) }}
+        {{ form_row(form.roles) }}
+        <div>
+            <button type="submit">Modifier</button>
+            <a href="{{ path('app_admin_profil') }}"><button>Annuler</button></a>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

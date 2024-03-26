@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block title %}Nouveau {{categorie}}{% endblock %}
+{% block body %}
+    {{ form_start(form) }}
+    <div class="admin_form">
+        {{ form_row(form.libelle) }}
+        {{ form_row(form.modele) }}
+        {{ form_row(form.marque) }}
+        {{ form_row(form.noSerie) }}
+        {{ form_row(form.centre) }}
+        <div>
+            <button type="submit">Ajouter</button>
+            <a href="{{ path('app_admin_materiel', {'categorie': categorie}) }}"><button>Annuler</button></a>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

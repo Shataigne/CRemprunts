@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block title %}liste salles{% endblock %}
+
+{% block body %}
+    <div class="admin_container">
+        <table class="admin_table">
+            <thead>
+            <tr>
+                <th>numero</th>
+                <th>batiment</th>
+                <th>etage</th>
+                <th>Categorie</th>
+                <th>Centre</th>
+                <th  colspan="2">Administration</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for salle in salles %}
+                <tr>
+                    <th>{{ salle.numero }}</th>
+                    <th>{{ salle.batiment }}</th>
+                    <th>{{ salle.etage }}</th>
+                    <th>{% if salle.categorie == 'CRS'%} Cours {% else %} Reunion {% endif %}</th>
+                    <th>{{ salle.centre.libelle }}</th>
+                    <th><a href="{{ path('app_admin_salles_modifier', {'id': salle.id}) }}"><button>Modifier</button></a></th>
+                    <th><a href="{{ path('app_admin_salles_supprimer', {'id': salle.id}) }}" onclick="confirm('Êtes-vous sûr de vouloir supprimer cette salle ?')"><button>Supprimer</button></a></th>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('app_admin_salles_create') }}"><button class="button">Ajouter une salle</button></a>
+    </div>
+
+{% endblock %}
+
+

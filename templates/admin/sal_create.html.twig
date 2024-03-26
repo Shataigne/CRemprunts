@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block title %}Nouvelle salle{% endblock %}
+{% block body %}
+    {{ form_start(form) }}
+    <div class="admin_form">
+        {{ form_row(form.numero) }}
+        {{ form_row(form.batiment) }}
+        {{ form_row(form.etage) }}
+        {{ form_row(form.categorie) }}
+        {{ form_row(form.centre) }}
+        <div>
+            <button type="submit">Ajouter</button>
+            <a href="{{ path('app_admin_salles') }}"><button>Annuler</button></a>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

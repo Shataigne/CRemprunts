@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Materiels{% endblock %}
+
+{% block body %}
+    <div>
+        {% for materiel in materiels %}
+
+            <div>
+                {{ materiel.libelle }}
+                {{ materiel.centre.libelle }}
+            </div>
+
+        {% endfor %}
+    </div>
+{% endblock %}
