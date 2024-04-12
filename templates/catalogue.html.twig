@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <div class="catalogue_container">
+        {{ form_start(form) }}
+        <div class="catalogue_filtres">
+            <h2>Filtres :</h2>
+            {{ form_label(form.q) }}
+            {{ form_widget(form.q) }}
+            {{ form_label(form.centres) }}
+            {{ form_widget(form.centres) }}
+            {{ form_row(form.dispoNow) }}
+            <button>Filtrer</button>
+
+        </div>
+        {{ form_end(form) }}
+        <div>
+                {% block div %}{% endblock %}
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js" integrity="sha256-i4vDW9EgtaJmeauDDymtNF2omPZ1fCKpf4w1gBlU1IE=" crossorigin="anonymous"></script>
+
+        <script type="module" src="{{ asset('script/setCalendrier.js') }}"></script>
+    </div>
+{% endblock %}

@@ -12,44 +12,126 @@
         {% endblock %}
     </head>
     <body>
+
     {% if app.user %}
     <header>
-        <div class="user_nav">
-            <a href="{{ path('app_home') }}"><img src="{{ asset('image/vecteezy_3d-illustration-icone-conception-de-metallique-orange-image_25225293.png') }}" alt=""></a>
-            <nav>
-                <a href="{{ path('app_home') }}">Accueil</a>
-                <a href="{{ path('app_vehicule_catalogue') }}">Véhicules</a>
-                <a href="{{ path('app_pc_catalogue') }}">Ordinateurs</a>
-                <a href="{{ path('app_flottes_catalogue') }}">Flottes de PC</a>
-                <a href="{{ path('app_kit_catalogue') }}">Kits</a>
-                <a href="{{ path('app_salles_reunion') }}">Salles de réunion</a>
-                <a href="{{ path('app_salles_cours') }}">Salle de cours</a>
+        <div class="grande_nav">
+            <a href="{{ path('app_home') }}">
+                <div class="nav_logo">
+                <img src="{{ asset('image/logo.png') }}" alt="">
+                <p>Croix-Rouge <br> Française</p>
+            </div>
+            </a>
+            <nav class="nav">
+                    <ul>
+                        <li><a href="{{ path('app_home') }}">Accueil</a></li>
+                        <li><a href="{{ path('app_vehicule_catalogue') }}">Véhicules</a></li>
 
-                {% if is_granted("ROLE_ADMIN") %}
-                <a>Administration</a>
-                {% endif %}
+                        <li>
+                            <a>équipements</a>
+                            <ul>
+                                <li><a href="{{ path('app_pc_catalogue') }}">Ordinateurs</a></li>
+                                <li><a href="{{ path('app_flottes_catalogue') }}">Flottes de PC</a></li>
+                                <li><a href="{{ path('app_kit_catalogue') }}">Kits</a></li>
+                            </ul>
+                        </li>
 
-                <a href="{{ path('app_logout') }}">Se deconnecter</a>
+                        <li>
+                            <a>Salles</a>
+                            <ul>
+                                <li><a href="{{ path('app_salles_cours') }}">Salles de cours</a></li>
+                                <li><a href="{{ path('app_salles_reunion') }}">Salles de réunion</a></li>
+                            </ul>
+                        </li>
+                        {% if is_granted("ROLE_ADMIN") %}
+                        <li>
+                            <a>Administration</a>
+                            <ul>
+                                <li><a href="{{ path('app_register') }}">Inscription</a></li>
+                                <li><a href="{{ path('app_admin_vehicules') }}">Gestion Véhicules</a></li>
+                                <li><a href="{{ path('app_admin_materiel', {'categorie': 'ordinateur'}) }}">Gestion PC</a></li>
+                                <li><a href="{{ path('app_admin_materiel', {'categorie': 'Flotte de PC'}) }}">Gestion Flottes</a></li>
+                                <li><a href="{{ path('app_admin_materiel', {'categorie': 'Kit de Simulation'}) }}">Gestion Kits</a></li>
+                                <li><a href="{{ path('app_admin_salles') }}">Gestion Salles</a></li>
+                                <li><a href="{{ path('app_admin_profil') }}">Gestion Utilisateurs</a></li>
+                            </ul>
+                        </li>
+                        {% endif %}
+                        <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                    </ul>
             </nav>
         </div>
-        {% if is_granted("ROLE_ADMIN")%}
-        <nav class="admin_nav">
-            <a href="{{ path('app_register') }}">Inscription</a>
-            <a href="{{ path('app_admin_vehicules') }}">Gestion Vehicules</a>
-            <a href="{{ path('app_admin_materiel', {'categorie': 'ordinateur'}) }}">Gestion PC</a>
-            <a href="{{ path('app_admin_materiel', {'categorie': 'Flotte de PC'}) }}">Gestion Flottes</a>
-            <a href="{{ path('app_admin_materiel', {'categorie': 'Kit de Simulation'}) }}">Gestion Kits</a>
-            <a href="{{ path('app_admin_salles') }}">Gestion Salles</a>
-        </nav>
-        {% endif %}
+
+        <div class="petite_nav">
+            <div class="phone_banner">
+
+            </div>
+
+                <nav role="navigation">
+                    <div id="menuToggle">
+                        <input type="checkbox" />
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <ul id="menu">
+                            <li><a href="{{ path('app_home') }}">Accueil</a></li>
+                            <li><a href="{{ path('app_vehicule_catalogue') }}">Véhicules</a></li>
+
+                            <li>
+                                <a>> équipements</a>
+                                <ul>
+                                    <li><a href="{{ path('app_pc_catalogue') }}">Ordinateurs</a></li>
+                                    <li><a href="{{ path('app_flottes_catalogue') }}">Flottes de PC</a></li>
+                                    <li><a href="{{ path('app_kit_catalogue') }}">Kits</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a>> Salles</a>
+                                <ul>
+                                    <li><a href="{{ path('app_salles_cours') }}">Salles de cours</a></li>
+                                    <li><a href="{{ path('app_salles_reunion') }}">Salles de réunion</a></li>
+                                </ul>
+                            </li>
+                            {% if is_granted("ROLE_ADMIN") %}
+                                <li>
+                                    <a>> Administration</a>
+                                    <ul>
+                                        <li><a href="{{ path('app_register') }}">Inscription</a></li>
+                                        <li><a href="{{ path('app_admin_vehicules') }}">Gestion Vehicules</a></li>
+                                        <li><a href="{{ path('app_admin_materiel', {'categorie': 'ordinateur'}) }}">Gestion PC</a></li>
+                                        <li><a href="{{ path('app_admin_materiel', {'categorie': 'Flotte de PC'}) }}">Gestion Flottes</a></li>
+                                        <li><a href="{{ path('app_admin_materiel', {'categorie': 'Kit de Simulation'}) }}">Gestion Kits</a></li>
+                                        <li><a href="{{ path('app_admin_salles') }}">Gestion Salles</a></li>
+                                        <li><a href="{{ path('app_admin_profil') }}">Gestion Utilisateurs</a></li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                        </ul>
+                    </div>
+                </nav>
+        </div>
 
     </header>
     {% endif %}
+
+
     <main>
         {% block body %}{% endblock %}
     </main>
     <footer>
-        footer
+        <section>
+            <a>Comment faire un emprunt</a>
+        </section>
+        <section>
+            <a>Ordinateurs</a>
+            <a>Flottes de pc</a>
+            <a>Kits de Simulation</a>
+            <a>Véhicules</a>
+            <a>Salles de cours</a>
+            <a>Salles de réunion</a>
+        </section>
     </footer>
     </body>
 </html>

@@ -23,9 +23,9 @@ class SearchData
     public array $modeles = [];
 
     /**
-     * @var Centre[]
+     * @var Centre
      */
-    public array $centres = [];
+    public Centre $centres;
 
 
     public ?bool $dispoNow;

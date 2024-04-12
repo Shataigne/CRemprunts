@@ -6,6 +6,7 @@ use App\Repository\CentreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CentreRepository::class)]
 class Centre
@@ -19,12 +20,14 @@ class Centre
     private ?string $libelle = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Positive()]
     private ?int $numero = null;
 
     #[ORM\Column(length: 100)]
     private ?string $rue = null;
 
     #[ORM\Column(length: 5)]
+    #[Assert\Length(min: 5, max: 5, exactMessage: 'Le code Postal doit faire 5 chiffres.')]
     private ?string $cpo = null;
 
     #[ORM\Column(length: 100)]
@@ -39,11 +42,15 @@ class Centre
     #[ORM\OneToMany(targetEntity: Salle::class, mappedBy: 'centre')]
     private Collection $salles;
 
+    #[ORM\OneToMany(targetEntity: Utilisateur::class, mappedBy: 'Centre')]
+    private Collection $utilisateurs;
+
     public function __construct()
     {
         $this->vehicules = new ArrayCollection();
         $this->materiels = new ArrayCollection();
         $this->salles = new ArrayCollection();
+        $this->utilisateurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -205,5 +212,35 @@ class Centre
     public function __toString(): string
     {
        return $this->libelle;
+    }
+
+    /**
+     * @return Collection<int, Utilisateur>
+     */
+    public function getUtilisateurs(): Collection
+    {
+        return $this->utilisateurs;
+    }
+
+    public function addUtilisateur(Utilisateur $utilisateur): static
+    {
+        if (!$this->utilisateurs->contains($utilisateur)) {
+            $this->utilisateurs->add($utilisateur);
+            $utilisateur->setCentre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUtilisateur(Utilisateur $utilisateur): static
+    {
+        if ($this->utilisateurs->removeElement($utilisateur)) {
+            // set the owning side to null (unless already changed)
+            if ($utilisateur->getCentre() === $this) {
+                $utilisateur->setCentre(null);
+            }
+        }
+
+        return $this;
     }
 }

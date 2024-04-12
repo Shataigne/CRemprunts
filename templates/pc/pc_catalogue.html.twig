@@ -1,36 +1,31 @@
-{% extends 'base.html.twig' %}
+{% extends 'catalogue.html.twig' %}
 
 {% block title %}Ordinateurs{% endblock %}
-{% block body %}
-    <div class="catalogue_container">
-        <div class="catalogue_filtres">
-            <h2>Filtres :</h2>
-            {{ form_start(form) }}
-            {{form_row(form.q) }}
-            {{form_row(form.centres) }}
-            {{form_row(form.dispoNow) }}
-            <button>Filtrer</button>
-            {{ form_end(form) }}
+
+{% block div %}
+    {% if pcs is not empty %}
+{% for pc in pcs %}
+    <div class="catalogue_card">
+
+        <div class="catalogue_info">
+            <h2>{{ pc.libelle }}</h2>
+            <p> Centre : {{ pc.centre.libelle }}</p>
+            <p> Marque : {{ pc.marque.libelle }}</p>
+            {% if is_granted('ROLE_LOUEUR') %}<a href="{{ path('app_pc_details', {'id': pc.id}) }}"  >{% endif %}
+                <button>Réserver un créneau</button>
+                {% if is_granted('ROLE_LOUEUR') %}</a>{% endif %}
         </div>
 
-        <div>
-            <div>
-                {% if pcs is not empty %}
-        {% for pc in pcs %}
-            <a href="{{ path('app_pc_details', {'id': pc.id}) }}">
-                <div class="catalogue_card">
-                    <h2>{{ pc.libelle }}</h2>
-                    {{ pc.centre.libelle }}
-                </div>
-            </a>
-
-        {% endfor %}
-        {% else %}
-            <div class="catalogue_card">
-                Rien ne correspond à votre recherche !
-            </div>
-                {% endif %}
-            </div>
+        <div id="pc_{{ pc.id }}" class="catalogue_calendrier">
         </div>
+
     </div>
+{% endfor %}
+{% else %}
+    <div class="catalogue_card">
+        Rien ne correspond à votre recherche !
+    </div>
+
+
+  {% endif %}
 {% endblock %}

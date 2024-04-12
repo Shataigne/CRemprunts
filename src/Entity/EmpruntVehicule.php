@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\EmpruntVehiculeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EmpruntVehiculeRepository::class)]
 class EmpruntVehicule
@@ -18,6 +19,7 @@ class EmpruntVehicule
     private ?\DateTimeInterface $dateDebut = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\Expression("this.getDateFin() > this.getDateDebut()", message:"La date de fin doit être postérieure à la date de début.")]
     private ?\DateTimeInterface $dateFin = null;
 
     #[ORM\ManyToOne(inversedBy: 'empruntVehicules')]
@@ -34,6 +36,8 @@ class EmpruntVehicule
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\Column]
+    private ?bool $allDay = null;
 
 
     public function getId(): ?int
@@ -113,5 +117,19 @@ class EmpruntVehicule
 
         return $this;
     }
+
+
+    public function isAllDay(): ?bool
+    {
+        return $this->allDay;
+    }
+
+    public function setAllDay(bool $allDay): static
+    {
+        $this->allDay = $allDay;
+
+        return $this;
+    }
+
 
 }

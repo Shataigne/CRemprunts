@@ -6,17 +6,10 @@
     <div class="detail_container">
         <div>
             <div class="detail_card">
-                {{ vehicule.libelle }}
                 {{ vehicule.centre }}
             </div>
 
             <div class="reservation-container">
-                {% for message in app.flashes('error')  %}
-                    <div>{{ message }}</div>
-                {% endfor %}
-                {% for message in app.flashes('success')  %}
-                    <div>{{ message }}</div>
-                {% endfor %}
                 <form method="post" action="{{ path('app_vehicule_details', {'id': vehicule.id,'action': 'heure'}) }}" class="detail_card">
                     <h3>Par heure :</h3>
                     <div>
@@ -103,14 +96,25 @@
         </div>
 
         <div class="carte_container">
-            Carte
-            {% for emprunt in vehicule.empruntVehicules %}
-                {{ emprunt.dateDebut|date('Y-m-d')  }}
-                {{ emprunt.dateFin|date('Y-m-d')  }}
+            <h2> {{ vehicule.libelle }} </h2>
+            {% for message in app.flashes('error')  %}
+                <div class="erreur">{{ message }}</div>
             {% endfor %}
+            {% for message in app.flashes('success')  %}
+                <div class="succes">{{ message }}</div>
+            {% endfor %}
+            <div id="vehicules_{{ vehicule.id }}" class="catalogue_calendrier"></div>
         </div>
+
+
     </div>
 
 {% endblock %}
 
 
+{% block javascripts %}
+    {% block importmap %}{{ parent() }}{% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js" integrity="sha256-i4vDW9EgtaJmeauDDymtNF2omPZ1fCKpf4w1gBlU1IE=" crossorigin="anonymous"></script>
+
+    <script type="module" src="{{ asset('script/setCalendrier.js') }}"></script>
+{% endblock %}

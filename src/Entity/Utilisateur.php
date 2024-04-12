@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -19,6 +20,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
+    #[Assert\Email(message: "Adresse Mail au mauvais format.")]
     private ?string $email = null;
 
     /**
@@ -50,6 +52,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(targetEntity: EmpruntMateriel::class, mappedBy: 'emprunteur')]
     private Collection $empruntMateriels;
+
+    #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
+    private ?Centre $Centre;
 
     public function __construct()
     {
@@ -257,6 +262,18 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
                 $empruntMateriel->setEmprunteur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCentre(): ?Centre
+    {
+        return $this->Centre;
+    }
+
+    public function setCentre(?Centre $Centre): static
+    {
+        $this->Centre = $Centre;
 
         return $this;
     }

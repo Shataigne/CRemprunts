@@ -6,6 +6,7 @@ use App\Repository\MarqueRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MarqueRepository::class)]
 class Marque
@@ -19,6 +20,7 @@ class Marque
     private ?string $libelle = null;
 
     #[ORM\Column(length: 4)]
+    #[Assert\Choice(choices: ["INFO", "VEHI"])]
     private ?string $type = null;
 
     #[ORM\OneToMany(targetEntity: Vehicule::class, mappedBy: 'marque')]

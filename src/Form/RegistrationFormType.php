@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Centre;
 use App\Entity\Utilisateur;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -36,15 +38,26 @@ class RegistrationFormType extends AbstractType
                     'label' => 'Poste : ',
                 ]
             )
+            ->add('centre', EntityType::class,[
+                'label' => 'Centres : ',
+                'required' => false,
+                'class' => Centre::class,
+                'expanded' =>true,
+                'multiple' =>false
+            ])
             ->add('roles', ChoiceType::class, [
                 'label' => 'Roles : ',
                 'choices' => [
-
-                    'Emprunteur' => 'ROLE_LOUEUR',
                     'Observateur' => 'ROLE_USER',
+                    'Emprunteur' => 'ROLE_LOUEUR',
                     'Administrateur' => 'ROLE_ADMIN'
                 ],
-                'multiple' => true
+                'multiple' => true,
+                'expanded'=> true,
+                'data' => ['ROLE_USER'],
+                'choice_value' => function ($value) {
+                    return $value;
+                }
             ])
         ;
     }

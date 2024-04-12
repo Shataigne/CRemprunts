@@ -7,6 +7,12 @@
         {{ form_start(registrationForm) }}
     <div class="inscription_form">
         <h1>Ajouter un utilisateur :</h1>
+        {% for message in app.flashes('error')  %}
+            <div class="erreur">{{ message }}</div>
+        {% endfor %}
+        {% for message in app.flashes('success')  %}
+            <div class="succes">{{ message }}</div>
+        {% endfor %}
         {{ form_label(registrationForm.email) }}
         {{ form_widget(registrationForm.email) }}
         {{ form_label(registrationForm.nom) }}
@@ -17,6 +23,8 @@
         {{ form_widget(registrationForm.poste) }}
         {{ form_label(registrationForm.password) }}
         {{ form_widget(registrationForm.password) }}
+        {{ form_label(registrationForm.centre) }}
+        {{ form_widget(registrationForm.centre) }}
         {{ form_label(registrationForm.roles) }}
         {{ form_widget(registrationForm.roles) }}
         <button>Inscrire</button>

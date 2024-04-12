@@ -4,75 +4,95 @@
 
 {% block body %}
     <div class="home_container">
-        <a href="{{ path('app_vehicule_catalogue') }}"><div class="home_card" >
-            <div>
-                <h2>Vehicules</h2>
-                <p>description</p>
-                <p class="icon">></p>
+        <section class="home_recherche">
+            <h2>Recherche rapide :</h2>
+
+        </section>
+        <div class="recherche">
+            ici un formulaire
+            <button>Recherche</button>
+        </div>
+        <hr />
+        <a href="{{ path('app_vehicule_catalogue') }}">
+            <div class="home_card" >
+                <div class="home_info">
+                    <h2>Emprunter <br><span>un Véhicule</span></h2>
+                    <p>...pour vos déplacements professionnels et interventions.</p>
+                    <p class="icon">></p>
+                </div>
+
+                <div  class="home_img">
+                    <img src="{{ asset('image/logo_voiture.png') }}">
+                </div>
             </div>
-            <div  class="home_img">
-                <img src="{{ asset('image/vecteezy_3d-illustration-icone-conception-de-metallique-orange-image_25225293.png') }}">
-            </div>
-        </div></a>
+        </a>
         <a href="{{ path('app_kit_catalogue') }}">
-            <div class="home_card">
-                <div>
-                    <h2>Kit de simulation</h2>
-                    <p>description</p>
+            <div class="home_card" style="background-color: #e6eff0">
+                <div class="home_img">
+                    <img src="{{ asset('image/logo_type.png') }}">
+                </div>
+
+                <div class="home_info">
+                    <h2>Emprunter un <br><span>Kit de simulation</span></h2>
+                    <p>...pour des formations réalistes et efficaces.</p>
+                    <p class="icon">></p>
+                </div>
+            </div>
+        </a>
+
+        <a href="{{ path('app_pc_catalogue') }}">
+            <div class="home_card" style="background-color: #970b13; color: #e6eff0">
+                <div class="home_info">
+                    <h2 style="color: #e6eff0">Emprunter un <br><span>Ordinateur</span></h2>
+                    <p>...pour vos besoins de travail ou de formation à distance.</p>
                     <p class="icon">></p>
                 </div>
                 <div class="home_img">
-                    <img src="{{ asset('image/vecteezy_3d-illustration-icone-conception-de-metallique-orange-image_25225293.png') }}">
+                    <img src="{{ asset('image/logo_pc.png') }}">
                 </div>
             </div>
         </a>
-        <a href="{{ path('app_pc_catalogue') }}">
-        <div class="home_card">
-            <div>
-                <h2>Ordinateurs</h2>
-                <p>description</p>
-                <p class="icon">></p>
-            </div>
-            <div class="home_img">
-                <img src="{{ asset('image/vecteezy_3d-illustration-icone-conception-de-metallique-orange-image_25225293.png') }}">
-            </div>
-        </div>
-        </a>
+
         <a href="{{ path('app_flottes_catalogue') }}">
-        <div class="home_card">
-            <div>
-                <h2>Flottes de PC</h2>
-                <p>description</p>
-                <p class="icon">></p>
+            <div class="home_card">
+                <div class="home_img">
+                    <img src="{{ asset('image/logo_type.png') }}">
+                </div>
+                <div class="home_info">
+                    <h2>Emprunter une <br><span>Flotte de PC</span></h2>
+                    <p>...pour optimiser la productivité de votre équipe.</p>
+                    <p class="icon">></p>
+                </div>
+
             </div>
-            <div class="home_img">
-                <img src="{{ asset('image/vecteezy_3d-illustration-icone-conception-de-metallique-orange-image_25225293.png') }}">
-            </div>
-        </div>
         </a>
+
         <a href="{{ path('app_salles_cours') }}">
-        <div class="home_card">
-            <div>
-                <h2>Salle de cours</h2>
-                <p>description</p>
-                <p class="icon">></p>
+            <div class="home_card" style="background-color: #e6eff0">
+                <div class="home_info">
+                    <h2>Emprunter une <br><span>salle de cours</span></h2>
+                    <p>...pour des formations interactives et instructives.</p>
+                    <p class="icon">></p>
+                </div>
+                <div class="home_img">
+                    <img src="{{ asset('image/logo_type.png') }}">
+                </div>
             </div>
-            <div class="home_img">
-                <img src="{{ asset('image/vecteezy_3d-illustration-icone-conception-de-metallique-orange-image_25225293.png') }}">
-            </div>
-        </div>
         </a>
+
         <a href="{{ path('app_salles_reunion') }}">
-        <div class="home_card">
-            <div>
-                <h2>salle de réunion</h2>
-                <p>description</p>
-                <p class="icon">></p>
+            <div class="home_card" style="background-color: #970b13; color: #e6eff0">
+                <div class="home_img" >
+                    <img src="{{ asset('image/logo_type.png') }}">
+                </div>
+                <div class="home_info">
+                    <h2  style="color: #e6eff0">Emprunter une <br><span>salle de réunion</span></h2>
+                    <p>...pour avoir un environnement propice à la collaboration.</p>
+                    <p class="icon">></p>
+                </div>
             </div>
-            <div class="home_img">
-                <img src="{{ asset('image/vecteezy_3d-illustration-icone-conception-de-metallique-orange-image_25225293.png') }}">
-            </div>
-        </div>
         </a>
+
+
     </div>
 {% endblock %}

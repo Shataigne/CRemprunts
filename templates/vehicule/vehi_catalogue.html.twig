@@ -1,40 +1,31 @@
-{% extends 'base.html.twig' %}
+{% extends 'catalogue.html.twig' %}
 
-{% block title %}Vehicules{% endblock %}
+{% block title %}Véhicules{% endblock %}
 
-{% block body %}
-<div class="catalogue_container">
-    {{ form_start(form) }}
-    <div class="catalogue_filtres">
-        <h2>Filtres :</h2>
-            {{ form_label(form.q) }}
-            {{form_widget(form.q) }}
-            {{form_label(form.centres)}}
-            {{form_widget(form.centres)}}
-            {{form_row(form.dispoNow) }}
-            <button>Filtrer</button>
-
-    </div>
-    {{ form_end(form) }}
-    <div>
-        <div>
-            {% if vehicules is not empty %}
-                {% for vehicule in vehicules %}
-                    {% if is_granted('ROLE_LOUEUR') %} <a href="{{ path('app_vehicule_details', {'id': vehicule.id}) }}">{% endif %}
-
+{% block div %}
+                {% if vehicules is not empty %}
+                    {% for vehicule in vehicules %}
                         <div class="catalogue_card">
-                            <p>{{ vehicule.libelle }}</p>
-                            <p> Centre : {{ vehicule.centre.libelle }}</p>
-                        </div>
 
-                    {% if is_granted('ROLE_LOUEUR') %} </a>{% endif %}
-                {% endfor %}
-            {% else %}
-                <div class="catalogue_card">
-                    Rien ne correspond à votre recherche !
-                </div>
-            {% endif %}
-        </div>
-    </div>
-</div>
+                            <div class="catalogue_info">
+                                <h2>{{ vehicule.libelle }}</h2>
+                                <p> Centre : {{ vehicule.centre.libelle }}</p>
+                                <p> Marque : {{ vehicule.marque.libelle }}</p>
+                                <p> Plaque : {{ vehicule.plaque }}</p>
+
+                                {% if is_granted('ROLE_LOUEUR') %}<a href="{{ path('app_vehicule_details', {'id': vehicule.id}) }}"  >{% endif %}
+                                <button>Réserver un créneau</button>
+                                {% if is_granted('ROLE_LOUEUR') %}</a>{% endif %}
+                            </div>
+
+                            <div id="vehicules_{{ vehicule.id }}" class="catalogue_calendrier">
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="catalogue_card">
+                        Rien ne correspond à votre recherche !
+                    </div>
+                {% endif %}
 {% endblock %}

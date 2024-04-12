@@ -6,7 +6,6 @@
     <div class="detail_container">
         <div>
             <div class="detail_card">
-                <h2>{{ pc.libelle }}</h2>
                 {{ pc.centre }}
             </div>
 
@@ -14,6 +13,13 @@
                 <form method="post" action="{{ path('app_pc_details', {'id': pc.id,'action': 'heure'}) }}" class="detail_card">
                     <h3>Par heure :</h3>
                     <div>
+
+                        <label for="libelle">description courte :</label>
+                        <select id="libelle" name="libelle">
+                            {% for centre in centres %}
+                                <option>{{ app.user.nom }} intervention {{ centre.libelle }}</option>
+                            {% endfor %}
+                        </select>
                         <label for="h_date">date :</label>
                         <input id="h_date" name="h_date" type="date" value="{{ date('now')|date('Y-m-d') }}" min="{{ date('now')|date('Y-m-d') }}">
                         <br>
@@ -44,6 +50,13 @@
                     <h3>Pour une journée :</h3>
 
                     <div>
+                        <label for="libelle">description courte :</label>
+                        <select id="libelle" name="libelle">
+                            {% for centre in centres %}
+                                <option>{{ app.user.nom }} intervention {{ centre.libelle }}</option>
+                            {% endfor %}
+                        </select>
+
                         <label for="j_date">date :</label>
                         <input id="j_date" name="j_date" type="date" value="{{ date('now')|date('Y-m-d') }}" min="{{ date('now')|date('Y-m-d') }}">
                         <br>
@@ -53,6 +66,13 @@
                 <form method="post" action="{{ path('app_pc_details', {'id': pc.id,'action': 'long'}) }}" class="detail_card">
                     <h3>Pour une période plus longue :</h3>
                     <div>
+
+                        <label for="libelle">description courte :</label>
+                        <select id="libelle" name="libelle">
+                            {% for centre in centres %}
+                                <option>{{ app.user.nom }} intervention {{ centre.libelle }}</option>
+                            {% endfor %}
+                        </select>
                         <label for="l_dateDebut">date debut :</label>
                         <input id="l_dateDebut" name="l_dateDebut" type="date" value="{{ date('now')|date('Y-m-d') }}" min="{{ date('now')|date('Y-m-d') }}">
                         <br>
@@ -67,14 +87,24 @@
         </div>
 
         <div class="carte_container">
-            Carte
-            {% for emprunt in pc.empruntMateriels %}
-                {{ emprunt.dateDebut|date('Y-m-d')  }}
-                {{ emprunt.dateFin|date('Y-m-d')  }}
+            <h2>{{ pc.libelle }}</h2>
+            {% for message in app.flashes('error')  %}
+                <div class="erreur">{{ message }}</div>
             {% endfor %}
+            {% for message in app.flashes('success')  %}
+                <div class="succes">{{ message }}</div>
+            {% endfor %}
+            <div id="pc_{{ pc.id }}" class="catalogue_calendrier"></div>
         </div>
     </div>
 
 {% endblock %}
 
 
+
+{% block javascripts %}
+    {% block importmap %}{{ parent() }}{% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js" integrity="sha256-i4vDW9EgtaJmeauDDymtNF2omPZ1fCKpf4w1gBlU1IE=" crossorigin="anonymous"></script>
+
+    <script type="module" src="{{ asset('script/setCalendrier.js') }}"></script>
+{% endblock %}

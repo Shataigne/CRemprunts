@@ -20,6 +20,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/admin', name: 'app_admin')]
@@ -213,15 +214,21 @@ class AdminController extends AbstractController
         ]);
     }
     #[Route(path: '/profil/modification/{id}', name: '_profil_modification')]
-    public function ModifierProfil(Request $request, EntityManagerInterface $entityManager, Utilisateur $user): Response
+    public function ModifierProfil(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, Utilisateur $user): Response
     {
         $form = $this->createForm(ProfilModificationFormType::class,$user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
             $entityManager->persist($user);
-            $entityManager->flush($user);
+            $entityManager->flush();
             $this->addFlash('succes','Profil modifié avec succès');
             return $this->redirectToRoute('app_admin_profil');
 

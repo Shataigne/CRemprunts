@@ -14,31 +14,31 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class SearchFormType extends AbstractType
 {
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
         $builder
         ->add('q', TextType::class, [
-            'label' => 'rechercher : ',
+            'label' => 'Rechercher : ',
             'required' => false,
-            'attr' => [
-                'placeholder' => 'Rechercher'
-            ]
         ])
         ->add('centres', EntityType::class,[
-            'label' => 'Centre : ',
+            'label' => 'Centres : ',
             'required' => false,
             'class' => Centre::class,
             'expanded' =>true,
-            'multiple' => true
+            'multiple' =>false
         ])
         ->add('dispoNow', CheckboxType::class, [
-            'label' => 'disponible maintenant',
+            'label' => 'Disponible maintenant ',
             'required' => false
         ])
         ;
+
     }
 
-    public function configureOptions(OptionsResolver $resolver){
+    public function configureOptions(OptionsResolver $resolver): void
+    {
 
         $resolver->setDefaults([
             'data_class' => SearchData::class,
@@ -47,7 +47,7 @@ class SearchFormType extends AbstractType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return '';
     }

@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 #[ORM\Entity(repositoryClass: SalleRepository::class)]
 class Salle
 {
@@ -16,20 +18,22 @@ class Salle
     private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\PositiveOrZero()]
     private ?int $numero = null;
 
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $batiment = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $etage = null;
+    private int $etage = 0;
 
     #[ORM\Column(length: 3)]
-    private ?string $categorie = null;
+    #[Assert\Choice(choices: ["CRS", "REU"])]
+    private string $categorie;
 
     #[ORM\ManyToOne(inversedBy: 'salles')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Centre $centre = null;
+    private Centre $centre;
 
     #[ORM\OneToMany(targetEntity: EmpruntSalle::class, mappedBy: 'salle',cascade: ['remove'])]
     private Collection $empruntSalles;

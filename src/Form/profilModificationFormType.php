@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -28,6 +27,10 @@ class profilModificationFormType extends AbstractType
                     'label' => 'Prenom : ',
                 ]
             )
+            ->add('password',PasswordType::class,[
+                'label' => 'Mot de passe : ',
+            ])
+
             ->add('poste',TextType::class,[
                     'label' => 'Poste : ',
                 ]
