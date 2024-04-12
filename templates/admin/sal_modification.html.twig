@@ -4,6 +4,7 @@
 
     {{ form_start(form) }}
     <div class="admin_form">
+        {{ form_errors(form) }}
         {{ form_row(form.numero) }}
         {{ form_row(form.batiment) }}
         {{ form_row(form.etage) }}

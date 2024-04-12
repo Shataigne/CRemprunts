@@ -19,13 +19,14 @@ class Salle
 
     #[ORM\Column(nullable: true)]
     #[Assert\PositiveOrZero()]
+
     private ?int $numero = null;
 
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $batiment = null;
 
     #[ORM\Column(nullable: true)]
-    private int $etage = 0;
+    private ?int $etage = 0;
 
     #[ORM\Column(length: 3)]
     #[Assert\Choice(choices: ["CRS", "REU"])]

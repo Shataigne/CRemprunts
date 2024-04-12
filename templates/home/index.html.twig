@@ -9,8 +9,22 @@
 
         </section>
         <div class="recherche">
-            ici un formulaire
-            <button>Recherche</button>
+            {{ form_start(form) }}
+            {{ form_label(form.action) }}
+            {{ form_widget(form.action) }}
+
+            {{ form_label(form.q) }}
+            {{ form_widget(form.q) }}
+
+            {{ form_label(form.centres) }}
+            {{ form_widget(form.centres) }}
+
+            {{ form_label(form.dispoNow) }}
+            {{ form_widget(form.dispoNow) }}
+
+            <button type="submit">Recherche</button>
+            {{ form_end(form) }}
+
         </div>
         <hr />
         <a href="{{ path('app_vehicule_catalogue') }}">
@@ -48,7 +62,7 @@
                     <p class="icon">></p>
                 </div>
                 <div class="home_img">
-                    <img src="{{ asset('image/logo_pc.png') }}">
+                    <img src="{{ asset('image/logo_type.png') }}">
                 </div>
             </div>
         </a>

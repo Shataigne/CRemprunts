@@ -66,12 +66,7 @@ class VehiculeRepository extends ServiceEntityRepository
 
         if (!empty($search->centres)) {
             $query->andWhere('c.id = :centre')
-                ->setParameter('centre',$search->centres[0]);
-            if(isset($search->centres[1])) {
-                $query->orWhere('c.id = :centre')
-                    ->setParameter('centre',$search->centres[1]);
-
-            }
+                ->setParameter('centre',$search->centres);
 
         }
 

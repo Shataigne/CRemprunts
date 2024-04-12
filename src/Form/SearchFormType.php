@@ -26,7 +26,7 @@ class SearchFormType extends AbstractType
             'label' => 'Centres : ',
             'required' => false,
             'class' => Centre::class,
-            'expanded' =>true,
+            'expanded' =>false,
             'multiple' =>false
         ])
         ->add('dispoNow', CheckboxType::class, [

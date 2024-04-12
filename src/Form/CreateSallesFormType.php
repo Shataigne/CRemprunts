@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CreateSallesFormType extends AbstractType
 {
@@ -23,7 +24,15 @@ class CreateSallesFormType extends AbstractType
                 'html5' => true,
             ])
             ->add('batiment')
-            ->add('etage')
+            ->add('etage',NumberType::class, [
+                'required' => False,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => "Il faut renseigner l'étage. Pour le rez-de-chaussée, mettez 0, pour un sous-sol mettez -1, -2, ..",
+                    ]),
+                ],
+                'html5' => true,
+            ])
             ->add('categorie', ChoiceType::class, [
                 'choices' => [
                     'Salle de cours' => 'CRS',

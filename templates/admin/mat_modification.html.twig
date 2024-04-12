@@ -3,6 +3,7 @@
 {% block body %}
     {{ form_start(form) }}
     <div class="admin_form">
+        {{ form_errors(form) }}
         {{ form_row(form.libelle) }}
         {{ form_row(form.modele) }}
         {{ form_row(form.marque) }}

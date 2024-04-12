@@ -35,21 +35,6 @@ button:hover,
     background-color: #970b13;
 }
 
-
-#centres {
-   display: flex;
-   flex-flow: row wrap;
-    width: 100%;
-}
-
-#centres label{
-    min-width: 90%;
-}
-
-#centres input{
-    min-width: 5%;
-}
-
 hr {
     border: none;
     border-bottom: 1px dotted #970b13;
@@ -206,6 +191,8 @@ footer {
     justify-content: center;
 }
 
+
+
 .home_card {
     background:#67b1bc;
     height: 350px;
@@ -280,22 +267,19 @@ footer {
     }
 }
 
+
 .recherche {
-    width: 70%;
+    width: 60%;
     background-color: white;
     border: double 4px #970b13;
-    height: 100px;
     position: relative;
     bottom: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     gap: 30px;
+    padding: 30px;
     margin-bottom: -100px;
-    button {
-        height: 50px;
-    }
+
 }
+
 
 /***************** CATALOGUE ***********************/
 
@@ -450,7 +434,7 @@ footer {
 
 .login-card {
     background-color: #e6eff0;
-    opacity: 85%;
+    opacity: 95%;
     width: 40vw;
     margin: auto;
     padding: 20px;
@@ -569,6 +553,7 @@ thead {
 }
 
 
+
 @media screen and (max-width: 1060px) {
 
     .nav_logo p {
@@ -630,7 +615,7 @@ thead {
         top: 15px;
         left: 15px;
         border-radius: 15px;
-        z-index: 1000; /* Assurez-vous que le z-index est supérieur à celui des autres éléments si nécessaire */
+        z-index: 100;
         background-color: #970b13;
     }
 

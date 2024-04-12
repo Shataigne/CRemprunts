@@ -6,14 +6,10 @@ use App\Data\SearchData;
 use App\Entity\EmpruntVehicule;
 use App\Entity\Vehicule;
 use App\Form\SearchFormType;
-use App\Repository\CalendrierRepository;
 use App\Repository\CentreRepository;
-use App\Repository\EmpruntVehiculeRepository;
 use App\Repository\VehiculeRepository;
 use App\Service\CalendrierService;
 use App\Service\EmpruntService;
-use DateInterval;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,6 +17,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[Route('/vehicules', name: 'app_vehicule')]
@@ -63,10 +61,21 @@ class VehiculeController extends AbstractController
             $listEmprunt = $vehicule->getEmpruntVehicules();
 
             if ($empruntService->verificationDate($date[0], $date[1], $listEmprunt)) {
-                $empruntService->setEmprunt($emprunt,$date,$request,$allDay);
-                $entityManager->persist($emprunt);
-                $entityManager->flush();
-                $this->addFlash('success', 'Reservation effectuée !');
+
+                $validator = Validation::createValidator();
+                $errors = $validator->validate([$date[0], $date[1]], [
+                    new Assert\Expression("value[1] > value[0]"),
+                ]);
+
+                if (count($errors) > 0) {
+                    $this->addFlash(type:'error', message:"La date de fin doit être postérieure à la date de début.");
+                }else {
+                    $empruntService->setEmprunt($emprunt,$date,$request,$allDay);
+                    $entityManager->persist($emprunt);
+                    $entityManager->flush();
+                    $this->addFlash('success', 'Reservation effectuée !');
+                };
+
             } else {
                 $this->addFlash('error', 'Dates indisponibles');
             }

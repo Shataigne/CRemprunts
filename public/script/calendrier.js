@@ -59,7 +59,7 @@ export function initializeCalendar(calendarElt, data) {
         },
         displayEventEnd: true,
         eventOrder: "start,-duration,allDay,title",
-        eventClassNames: function (event) {
+        eventClassNames: function () {
             const classes = ['fc-event','background-event'];
             return classes.join(' ');
         },
