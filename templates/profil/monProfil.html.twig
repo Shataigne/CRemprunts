@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil {{ app.user.nom }} {{ app.user.prenom }}{% endblock %}
+
+{% block body %}
+    <div class="catalogue_container">
+    <div class="detail_card">
+        <h1>{{ app.user.nom }} {{ app.user.prenom }}</h1>
+        <div>
+            <p>Nom : </p>
+            <p>{{ app.user.nom }} {{ app.user.prenom }}</p>
+        </div>
+        <div>
+            <p>Email : </p>
+            <p>{{ app.user.email }} </p>
+        </div>
+        <div>
+            <p>Mot de passe : </p>
+            <a href="{{ path('app_new_mdp', {'id':  app.user.id  }) }}"><button>Modifier mon mot de passe</button></a>
+        </div>
+        <div>
+            <p>Centre : </p>
+            <p>{{ app.user.centre }} </p>
+        </div>
+        <div>
+            <p>Poste : </p>
+            <p>{{ app.user.poste }} </p>
+        </div>
+
+    </div>
+
+{% endblock %}
