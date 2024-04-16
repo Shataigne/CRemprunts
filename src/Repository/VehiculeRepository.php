@@ -7,6 +7,7 @@ use App\Entity\Vehicule;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use function PHPUnit\Framework\isEmpty;
+use function PHPUnit\Framework\isFalse;
 
 /**
  * @extends ServiceEntityRepository<Vehicule>
@@ -54,9 +55,8 @@ class VehiculeRepository extends ServiceEntityRepository
     {
         $query = $this
             ->createQueryBuilder('v')
-            ->select('c','m','v','e')
+            ->select('c','m','v')
             ->leftjoin('v.centre', 'c')
-            ->leftJoin('v.empruntVehicules','e')
             ->leftjoin('v.marque','m');
 
         if (!is_null($search->q)) {
@@ -72,25 +72,22 @@ class VehiculeRepository extends ServiceEntityRepository
 
         if (!empty($search->dispoNow)) {
             if ( $search->dispoNow === true) {
-                $query->andWhere('e.dateDebut < :dn and e.dateFin < :dn')
-                    ->orWhere('e.dateDebut > :dn and e.dateFin > :dn' )
-                    ->orWhere('v.empruntVehicules is empty' )
+                $query->leftJoin('v.empruntVehicules', 'e', 'WITH', 'not((e.dateDebut > :dn AND e.dateFin > :dn) OR (e.dateDebut < :dn AND e.dateFin < :dn))')
+                    ->andWhere('e.libelle is null')
                     ->setParameter('dn', new \DateTime());
             }
         }
 
         if (!empty($search->dispoLe)) {
-            $query->andWhere('e.dateDebut < :dn and e.dateFin < :dn')
-                ->orWhere('e.dateDebut > :dn and e.dateFin > :dn' )
-                ->orWhere('v.empruntVehicules is empty' )
-                ->setParameter('dn', $search->dispoLe);
+            $query->leftJoin('v.empruntVehicules', 'e', 'WITH', 'not((e.dateDebut > :dl AND e.dateFin > :dl) OR (e.dateDebut < :dl AND e.dateFin < :dl))')
+                ->andWhere('e.libelle is null')
+                ->setParameter('dl', $search->dispoLe);
         }
         if (!empty($search->dispoMin) and !empty($search->dispoMax)) {
-            $query->andWhere('e.dateDebut < :dn and e.dateFin < :dn')
-                ->orWhere('e.dateDebut > :dm and e.dateFin > :dm' )
-                ->orWhere('v.empruntVehicules is empty' )
-                ->setParameter('dn', $search->dispoMin)
-                ->setParameter('dm', $search->dispoMax);
+            $query->leftJoin('v.empruntVehicules', 'e', 'WITH', 'not((e.dateDebut > :da AND e.dateFin > :da) OR (e.dateDebut < :db AND e.dateFin < :db))')
+                ->andWhere('e.libelle is null')
+                ->setParameter('db', $search->dispoMin)
+                ->setParameter('da', $search->dispoMax);
         }
 
         // Execute the query

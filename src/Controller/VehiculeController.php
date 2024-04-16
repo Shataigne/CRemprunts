@@ -35,7 +35,6 @@ class VehiculeController extends AbstractController
         $form->handleRequest($request);
 
         $vehicules = $vehiculeRepository->findByFilters($sdata);
-        $empruntsParVehicule = [];
 
         return $this->render('vehicule/vehi_catalogue.html.twig', [
             'vehicules' => $vehicules,
