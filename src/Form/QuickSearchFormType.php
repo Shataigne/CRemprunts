@@ -23,10 +23,10 @@ class QuickSearchFormType extends AbstractType
                 'choices' => [
                     'Véhicule' => 'vehicule',
                     'Ordinateur' => 'pc',
-                    'Kit' => 'Kit',
-                    'Flotte de PC' => 'flotte',
-                    'Salle de cours' => 'cours',
-                    'Salle de reunion' => 'reunion',
+                    'Kit' => 'kit',
+                    'Flotte de PC' => 'flottes',
+                    'Salle de cours' => 'salles_cours',
+                    'Salle de reunion' => 'salles_reunion',
                 ],
             ])
             ->add('q', TextType::class, [

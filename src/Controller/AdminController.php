@@ -12,6 +12,7 @@ use App\Form\CreateSallesFormType;
 use App\Form\CreateVehiculeType;
 use App\Form\profilModificationFormType;
 use App\Repository\CategorieRepository;
+use App\Repository\MarqueRepository;
 use App\Repository\MaterielRepository;
 use App\Repository\SalleRepository;
 use App\Repository\UtilisateurRepository;
@@ -37,10 +38,14 @@ class AdminController extends AbstractController
     }
 
     #[Route('/vehicule/nouveau', name: '_vehicules_create')]
-    public function createVehicule(EntityManagerInterface $entityManager, Request $request): Response
+    public function createVehicule(EntityManagerInterface $entityManager, Request $request, MarqueRepository $marqueRepository): Response
     {
         $vehicule = new Vehicule();
-        $form = $this->createForm(CreateVehiculeType::class, $vehicule);
+        $form = $this->createForm(CreateVehiculeType::class, $vehicule, [
+            'marques' => $marqueRepository->findBy([
+                'type' => 'VEHI'
+            ]),
+        ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($vehicule);
@@ -55,9 +60,13 @@ class AdminController extends AbstractController
     }
 
     #[Route('/vehicule/modifier/{id}', name: '_vehicules_modifier')]
-    public function modifierVehicule(Vehicule $vehicule, EntityManagerInterface $entityManager, Request $request): Response
+    public function modifierVehicule(Vehicule $vehicule, EntityManagerInterface $entityManager, Request $request,MarqueRepository $marqueRepository): Response
     {
-        $form = $this->createForm(CreateVehiculeType::class, $vehicule);
+        $form = $this->createForm(CreateVehiculeType::class, $vehicule, [
+            'marques' => $marqueRepository->findBy([
+                'type' => 'VEHI'
+            ]),
+        ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -153,14 +162,18 @@ class AdminController extends AbstractController
     }
 
     #[Route('/materiel/{categorie}/nouveau', name: '_materiel_create')]
-    public function createMateriel(EntityManagerInterface $entityManager, Request $request, CategorieRepository $categorieRepository): Response
+    public function createMateriel(EntityManagerInterface $entityManager, Request $request, CategorieRepository $categorieRepository, MarqueRepository $marqueRepository): Response
     {
 
         $materiel = new Materiel();
         $libelle = $request->attributes->get('categorie');
         $categorie = $categorieRepository->findOneBy(["libelle" => $libelle]);
 
-        $form = $this->createForm(CreateMaterielFormType::class, $materiel);
+        $form = $this->createForm(CreateMaterielFormType::class, $materiel, [
+            'marques' => $marqueRepository->findBy([
+                'type' => 'INFO'
+            ]),
+        ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $materiel->setCategorie($categorie);
@@ -177,10 +190,14 @@ class AdminController extends AbstractController
     }
 
     #[Route('/materiel/{categorie}/modifier/{id}', name: '_materiel_modifier')]
-    public function modifierMateriel(Materiel $materiel, EntityManagerInterface $entityManager, Request $request): Response
+    public function modifierMateriel(Materiel $materiel, EntityManagerInterface $entityManager, Request $request, MarqueRepository $marqueRepository): Response
     {
         $libelle = $request->attributes->get('categorie');
-        $form = $this->createForm(CreateMaterielFormType::class, $materiel);
+        $form = $this->createForm(CreateMaterielFormType::class, $materiel, [
+            'marques' => $marqueRepository->findBy([
+                'type' => 'INFO'
+            ]),
+        ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();

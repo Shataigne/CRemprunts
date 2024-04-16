@@ -39,8 +39,8 @@
                         <li>
                             <a>Salles</a>
                             <ul>
-                                <li><a href="{{ path('app_salles_cours') }}">Salles de cours</a></li>
-                                <li><a href="{{ path('app_salles_reunion') }}">Salles de réunion</a></li>
+                                <li><a href="{{ path('app_salles_cours_catalogue') }}">Salles de cours</a></li>
+                                <li><a href="{{ path('app_salles_reunion_catalogue') }}">Salles de réunion</a></li>
                             </ul>
                         </li>
                         {% if is_granted("ROLE_ADMIN") %}
@@ -58,6 +58,7 @@
                         </li>
                         {% endif %}
                         <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                        <li><a href="{{ path('app_profil') }}">Mon profil</a></li>
                     </ul>
             </nav>
         </div>
@@ -89,8 +90,8 @@
                             <li>
                                 <a>> Salles</a>
                                 <ul>
-                                    <li><a href="{{ path('app_salles_cours') }}">Salles de cours</a></li>
-                                    <li><a href="{{ path('app_salles_reunion') }}">Salles de réunion</a></li>
+                                    <li><a href="{{ path('app_salles_cours_catalogue') }}">Salles de cours</a></li>
+                                    <li><a href="{{ path('app_salles_reunion_catalogue') }}">Salles de réunion</a></li>
                                 </ul>
                             </li>
                             {% if is_granted("ROLE_ADMIN") %}

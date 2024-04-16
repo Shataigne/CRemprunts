@@ -27,10 +27,6 @@ class profilModificationFormType extends AbstractType
                     'label' => 'Prenom : ',
                 ]
             )
-            ->add('password',PasswordType::class,[
-                'label' => 'Mot de passe : ',
-            ])
-
             ->add('poste',TextType::class,[
                     'label' => 'Poste : ',
                 ]

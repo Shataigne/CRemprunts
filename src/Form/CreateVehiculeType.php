@@ -15,6 +15,8 @@ class CreateVehiculeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $marques = $options['marques'];
+
         $builder
             ->add('libelle', TextType::class, [
                 'attr' => [
@@ -30,17 +32,21 @@ class CreateVehiculeType extends AbstractType
                 'class' => Centre::class,
                 'choice_label' => 'libelle',
             ])
+
             ->add('marque', EntityType::class, [
                 'class' => Marque::class,
+                'choices' => $marques,
                 'choice_label' => 'libelle',
             ])
         ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Vehicule::class,
+            'marques' => []
         ]);
     }
 }

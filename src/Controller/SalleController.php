@@ -22,7 +22,7 @@ class SalleController extends AbstractController
 {
 
     // Salle de cours
-    #[Route('/cours', name: '_cours')]
+    #[Route('/cours', name: '_cours_catalogue')]
     public function listSalleCours(SalleRepository $salleRepository, Request $request): Response
     {
         $data = new SearchData();
@@ -39,7 +39,7 @@ class SalleController extends AbstractController
 
     //salle de reunion
 
-    #[Route('/reunion', name: '_reunion')]
+    #[Route('/reunion', name: '_reunion_catalogue')]
     public function listSalleReunion(SalleRepository $salleRepository, Request $request): Response
     {
         $data = new SearchData();

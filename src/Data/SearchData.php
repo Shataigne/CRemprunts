@@ -30,13 +30,11 @@ class SearchData
 
     public ?bool $dispoNow;
 
+    public ?DateTime $dispoLe;
 
-    public ?DateTime $dateMin;
+    public ?DateTime $dispoMin;
 
-    public ?DateTime $dateMax;
+    public ?DateTime $dispoMax;
 
-    public ?DateTime $TimeMin;
-
-    public ?DateTime $TimeMax;
 
 }

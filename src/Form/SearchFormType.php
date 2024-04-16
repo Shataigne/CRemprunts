@@ -7,6 +7,7 @@ use App\Entity\Centre;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -32,6 +33,24 @@ class SearchFormType extends AbstractType
         ->add('dispoNow', CheckboxType::class, [
             'label' => 'Disponible maintenant ',
             'required' => false
+        ])
+        ->add('dispoLe', DateTimeType::class, [
+            'label' => 'Disponible le :',
+            'required' => false,
+            'widget' => 'single_text',
+
+        ])
+        ->add('dispoMin', DateTimeType::class, [
+            'label' => 'Disponible du :',
+            'required' => false,
+            'widget' => 'single_text',
+
+        ])
+        ->add('dispoMax', DateTimeType::class, [
+            'label' => ' au ',
+            'required' => false,
+            'widget' => 'single_text',
+
         ])
         ;
 

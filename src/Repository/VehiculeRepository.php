@@ -79,6 +79,20 @@ class VehiculeRepository extends ServiceEntityRepository
             }
         }
 
+        if (!empty($search->dispoLe)) {
+            $query->andWhere('e.dateDebut < :dn and e.dateFin < :dn')
+                ->orWhere('e.dateDebut > :dn and e.dateFin > :dn' )
+                ->orWhere('v.empruntVehicules is empty' )
+                ->setParameter('dn', $search->dispoLe);
+        }
+        if (!empty($search->dispoMin) and !empty($search->dispoMax)) {
+            $query->andWhere('e.dateDebut < :dn and e.dateFin < :dn')
+                ->orWhere('e.dateDebut > :dm and e.dateFin > :dm' )
+                ->orWhere('v.empruntVehicules is empty' )
+                ->setParameter('dn', $search->dispoMin)
+                ->setParameter('dm', $search->dispoMax);
+        }
+
         // Execute the query
         return $query->getQuery()->getResult();
     }

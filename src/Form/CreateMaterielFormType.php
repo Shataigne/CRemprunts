@@ -15,6 +15,7 @@ class CreateMaterielFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $marques = $options['marques'];
         $builder
             ->add('libelle')
             ->add('modele')
@@ -25,6 +26,7 @@ class CreateMaterielFormType extends AbstractType
             ])
             ->add('marque', EntityType::class, [
                 'class' => Marque::class,
+                'choices' => $marques,
                 'choice_label' => 'libelle',
             ])
         ;
@@ -34,6 +36,7 @@ class CreateMaterielFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Materiel::class,
+            'marques' => []
         ]);
     }
 }
