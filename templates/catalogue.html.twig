@@ -18,7 +18,7 @@
             {{ form_widget(form.dispoMax) }}
             {{ form_row(form.dispoNow) }}
             <button>Filtrer</button>
-            <button type="reset">Reset</button>
+            <button type="reset"><a href="{% block path %}{% endblock %}">Enlever les filtres</a></button>
 
         </div>
         {{ form_end(form) }}

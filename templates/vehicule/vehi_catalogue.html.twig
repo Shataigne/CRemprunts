@@ -2,6 +2,8 @@
 
 {% block title %}Véhicules{% endblock %}
 
+{% block path %}{{ path('app_vehicule_catalogue') }}{% endblock %}
+
 {% block div %}
                 {% if vehicules is not empty %}
                     {% for vehicule in vehicules %}

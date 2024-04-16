@@ -25,7 +25,26 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() and $form->isValid()) {
             $action = $form->get('action')->getData();
-            $url = $router->generate('app_' . $action . '_catalogue', ['q' => $form->get('q')->getData(),'centres' => $form->get('centres')->getData(),'dispoNow' => $form->get('dispoNow')->getData()], UrlGeneratorInterface::ABSOLUTE_URL);
+            $centre = !is_null($form->get('centres')->getData()) ? $form->get('centres')->getData()->getid(): null;
+            $dispoNow = '';
+            $dispoLe = '';
+            $dispoMin = '';
+            $dispoMax = '';
+           if (!is_null($form->get('dispoLe')->getData() )) {
+                $dispoLe = $form->get('dispoLe')->getData()->format('Y-m-d'). 'T' .$form->get('dispoLe')->getData()->format('H:i');
+            }elseif(!is_null($form->get('dispoMin')->getData() )){
+                $dispoMin =   $form->get('dispoMin')->getData()->format('Y-m-d'). 'T' .$form->get('dispoMin')->getData()->format('H:i');
+                $dispoMax =  $form->get('dispoMax')->getData()->format('Y-m-d'). 'T' .$form->get('dispoMax')->getData()->format('H:i');
+            }else if ($form->get('dispoNow')->getData()) {
+               $dispoNow = TRUE;
+           }
+            $url = $router->generate('app_' . $action . '_catalogue', ['q' => $form->get('q')->getData(),
+                                                                            'centres' => $centre,
+                                                                            'dispoNow' => $dispoNow,
+                                                                            'dispoLe' => $dispoLe,
+                                                                            'dispoMin' => $dispoMin,
+                                                                            'dispoMax' => $dispoMax],
+                UrlGeneratorInterface::ABSOLUTE_URL);
             return $this->redirect($url);
 
         } else {
