@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\VehiculeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VehiculeRepository::class)]
@@ -34,6 +35,12 @@ class Vehicule
     #[ORM\ManyToOne(inversedBy: 'vehicules')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Marque $marque = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $places = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?array $equipements = null;
 
     public function __construct()
     {
@@ -134,6 +141,30 @@ class Vehicule
     public function setMarque(?marque $marque): static
     {
         $this->marque = $marque;
+
+        return $this;
+    }
+
+    public function getPlaces(): ?int
+    {
+        return $this->places;
+    }
+
+    public function setPlaces(?int $places): static
+    {
+        $this->places = $places;
+
+        return $this;
+    }
+
+    public function getEquipements(): ?array
+    {
+        return $this->equipements;
+    }
+
+    public function setEquipements(?array $equipements): static
+    {
+        $this->equipements = $equipements;
 
         return $this;
     }

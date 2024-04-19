@@ -10,6 +10,8 @@
                     <th>Marque</th>
                     <th>Modèle</th>
                     <th>Centre</th>
+                    <th>Places</th>
+                    <th>Equipements</th>
                     <th  colspan="2">Administration</th>
                 </tr>
             </thead>
@@ -20,6 +22,11 @@
                         <th>{{ vehicule.marque.libelle }}</th>
                         <th>{{ vehicule.modele }}</th>
                         <th>{{ vehicule.centre.libelle }}</th>
+                        <th>{{ vehicule.places }}</th>
+                        <th>{% for equipement in vehicule.equipements %}
+                                {{ equipement }}
+                            {% endfor %}
+                        </th>
                         <th><a href="{{ path('app_admin_vehicules_modifier', {'id': vehicule.id}) }}"><button>Modifier</button></a></th>
                 <th><a href="{{ path('app_admin_vehicules_supprimer', {'id': vehicule.id}) }}" onclick="confirm('Êtes-vous sûr de vouloir supprimer ce véhicule ?')"><button>Supprimer</button></a></th>
 

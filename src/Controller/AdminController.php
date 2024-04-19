@@ -49,6 +49,9 @@ class AdminController extends AbstractController
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $listEquipements = $form->get('equipements')->getData();
+            $arrayEquipements = explode(',', $listEquipements);
+            $vehicule->setEquipements($arrayEquipements);
             $entityManager->persist($vehicule);
             $entityManager->flush();
             $this->addFlash('succes', 'Véhicule ajouté avec succès');
@@ -70,6 +73,10 @@ class AdminController extends AbstractController
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $listEquipements = $form->get('equipements')->getData();
+            $arrayEquipements = explode(',', $listEquipements);
+            $vehicule->setEquipements($arrayEquipements);
+            $entityManager->persist($vehicule);
             $entityManager->flush();
             $this->addFlash('succes', 'Véhicule modifié avec succès');
             return $this->redirectToRoute('app_admin_vehicules');
@@ -131,6 +138,10 @@ class AdminController extends AbstractController
         $form = $this->createForm(CreateSallesFormType::class, $salle);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $listEquipements = $form->get('equipements')->getData();
+            $arrayEquipements = explode(',', $listEquipements);
+            $salle->setEquipements($arrayEquipements);
+            $entityManager->persist($salle);
             $entityManager->flush();
             $this->addFlash('succes', 'salle modifiée avec succès');
             return $this->redirectToRoute('app_admin_salles');
