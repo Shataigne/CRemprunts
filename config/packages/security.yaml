@@ -41,17 +41,18 @@ security:
     access_control:
          - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/inscription, roles: ROLE_ADMIN }
-         - { path: ^/kit_simulation/details/*, roles: ROLE_LOUEUR }
-         - { path: ^/pc/details/*, roles: ROLE_LOUEUR }
-         - { path: ^/flottes_pc/details/*, roles: ROLE_LOUEUR }
-         - { path: ^/salles/details/*, roles: ROLE_LOUEUR }
-         - { path: ^/vehicules/details/*, roles: ROLE_LOUEUR }
+         - { path: ^/kit_simulation/details/*, roles: ROLE_KITS }
+         - { path: ^/pc/details/*, roles: ROLE_PC }
+         - { path: ^/flottes_pc/details/*, roles: ROLE_FLOTTES }
+         - { path: ^/salles/details/*, roles: ROLE_SALLES }
+         - { path: ^/vehicules/details/*, roles: ROLE_VEHICULES }
          - { path: ^/catalogue, roles: ROLE_USER }
          - { path: ^/home, roles: ROLE_USER }
 
     role_hierarchy:
         ROLE_ADMIN: ROLE_LOUEUR
-        ROLE_LOUEUR: ROLE_USER
+        ROLE_LOUEUR: ROLE_SALLES,ROLE_VEHICULES,ROLE_FLOTTES,ROLE_PC,ROLE_KITS
+        ROLE_SALLES,ROLE_VEHICULES,ROLE_FLOTTES,ROLE_PC,ROLE_KITS,ROLE_CENTRES: ROLE_USER
 
 when@test:
     security:

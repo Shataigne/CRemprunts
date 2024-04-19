@@ -9,9 +9,11 @@
                <div class="catalogue_info">
                    <h2>{{ kit.libelle }}</h2>
                    <p> Centre : {{ kit.centre.libelle }}</p>
-                   {% if is_granted('ROLE_LOUEUR') %}<a href="{{ path('app_kit_details', {'id': kit.id}) }}">{% endif %}
-                   <button>Réserver un créneau</button>
-                   {% if is_granted('ROLE_LOUEUR') %}</a>{% endif %}
+                   {% if is_granted('ROLE_KITS') %}
+                   <a href="{{ path('app_kit_details', {'id': kit.id}) }}">
+                    <button>Réserver un créneau</button>
+                   </a>
+                   {% endif %}
                 </div>
                 <div id="kit_{{ kit.id }}" class="catalogue_calendrier">
                 </div>

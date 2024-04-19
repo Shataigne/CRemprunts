@@ -11,6 +11,8 @@
                 <th>etage</th>
                 <th>Categorie</th>
                 <th>Centre</th>
+                <th>Places</th>
+                <th>Equipements</th>
                 <th  colspan="2">Administration</th>
             </tr>
             </thead>
@@ -22,6 +24,11 @@
                     <th>{{ salle.etage }}</th>
                     <th>{% if salle.categorie == 'CRS'%} Cours {% else %} Reunion {% endif %}</th>
                     <th>{{ salle.centre.libelle }}</th>
+                    <th>{{ salle.places }}</th>
+                    <th>{% for equipement in salle.equipements %}
+                        {{ equipement }}
+                        {% endfor %}
+                    </th>
                     <th><a href="{{ path('app_admin_salles_modifier', {'id': salle.id}) }}"><button>Modifier</button></a></th>
                     <th><a href="{{ path('app_admin_salles_supprimer', {'id': salle.id}) }}" onclick="confirm('Êtes-vous sûr de vouloir supprimer cette salle ?')"><button>Supprimer</button></a></th>
 

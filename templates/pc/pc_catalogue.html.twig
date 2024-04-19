@@ -11,9 +11,9 @@
             <h2>{{ pc.libelle }}</h2>
             <p> Centre : {{ pc.centre.libelle }}</p>
             <p> Marque : {{ pc.marque.libelle }}</p>
-            {% if is_granted('ROLE_LOUEUR') %}<a href="{{ path('app_pc_details', {'id': pc.id}) }}"  >{% endif %}
-                <button>Réserver un créneau</button>
-                {% if is_granted('ROLE_LOUEUR') %}</a>{% endif %}
+            {% if is_granted('ROLE_PC') %}<a href="{{ path('app_pc_details', {'id': pc.id}) }}"  >
+                <button>Réserver un créneau</button></a>
+            {% endif %}
         </div>
 
         <div id="pc_{{ pc.id }}" class="catalogue_calendrier">

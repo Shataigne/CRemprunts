@@ -10,6 +10,7 @@ use App\Entity\Vehicule;
 use App\Form\CreateMaterielFormType;
 use App\Form\CreateSallesFormType;
 use App\Form\CreateVehiculeType;
+use App\Form\GestionRolesFormType;
 use App\Form\profilModificationFormType;
 use App\Repository\CategorieRepository;
 use App\Repository\MarqueRepository;
@@ -109,6 +110,9 @@ class AdminController extends AbstractController
         $form = $this->createForm(CreateSallesFormType::class, $salle);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $listEquipements = $form->get('equipements')->getData();
+            $arrayEquipements = explode(',', $listEquipements);
+            $salle->setEquipements($arrayEquipements);
             $entityManager->persist($salle);
             $entityManager->flush();
             $this->addFlash('succes', 'salle ajoutée avec succès');
@@ -234,6 +238,7 @@ class AdminController extends AbstractController
     public function ModifierProfil(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, Utilisateur $user): Response
     {
         $form = $this->createForm(ProfilModificationFormType::class,$user);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
@@ -252,6 +257,59 @@ class AdminController extends AbstractController
         }
         return $this->render('admin/ut_modification.html.twig', ['form' => $form]);
     }
+
+
+
+    #[Route(path: '/profil/roles/{id}', name: '_profil_roles')]
+    public function ModifierRoles( Utilisateur $user, EntityManagerInterface $entityManager, Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        $roles = $user->getRoles();
+        if (in_array('ROLE_ADMIN', $roles)) {
+            $roles = array_merge($roles,['ROLE_LOUEUR', 'ROLE_CENTRES']);
+        }
+        if (in_array('ROLE_LOUEUR', $roles)) {
+            $roles = array_merge($roles,['ROLE_SALLES','ROLE_VEHICULES', 'ROLE_KITS','ROLE_PC', 'ROLE_FLOTTES']);
+        }
+
+        $form = $this->createForm(GestionRolesFormType::class,null, ['roles' => $roles,]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            if ($data['administrateur'] === TRUE) {
+                $newroles[] = 'ROLE_ADMIN';
+            }else {
+                if (($data['salles'] === TRUE
+                        && $data['vehicules'] === TRUE
+                        && $data['kits'] === TRUE
+                        && $data['pc'] === TRUE
+                        && $data['flottes'] === TRUE)
+                    || $data['emprunteur'] === TRUE) {
+                    $newroles[] = 'ROLE_LOUEUR';
+                } else {
+                    if ($data['salles'] === TRUE)  $newroles[] = 'ROLE_SALLES';
+                    if ($data['vehicules'] === TRUE)  $newroles[] = 'ROLE_VEHICULES';
+                    if ($data['kits'] === TRUE)  $newroles[] = 'ROLE_KITS';
+                    if ($data['pc'] === TRUE)  $newroles[] = 'ROLE_PC';
+                    if ($data['flottes'] === TRUE)  $newroles[] = 'ROLE_FLOTTES';
+                }
+               if($data['centres'] === TRUE)  $newroles[] = 'ROLE_CENTRES' ;
+
+            }
+            $user->setRoles($newroles);
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_admin_profil');
+        }
+
+        return $this->render('admin/ut_roles.html.twig', [
+            'form' => $form,
+            'user' => $user,
+        ]);
+    }
+
 
     #[Route('/profil/supprimer/{id}', name: '_profil_supprimer')]
     public function supprimerProfil(Utilisateur $user, EntityManagerInterface $entityManager): Response

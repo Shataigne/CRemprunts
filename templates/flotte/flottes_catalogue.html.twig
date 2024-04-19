@@ -11,9 +11,9 @@
                     <p> Centre : {{ flotte.centre.libelle }}</p>
                     <p> Marque : {{ flotte.marque.libelle }}</p>
 
-                    {% if is_granted('ROLE_LOUEUR') %}<a href="{{ path('app_flottes_details', {'id': flotte.id}) }}"  >{% endif %}
-                        <button>Réserver un créneau</button>
-                        {% if is_granted('ROLE_LOUEUR') %}</a>{% endif %}
+                    {% if is_granted('ROLE_FLOTTES') %}<a href="{{ path('app_flottes_details', {'id': flotte.id}) }}"  >
+                        <button>Réserver un créneau</button></a>
+                    {% endif %}
                 </div>
 
                 <div id="flotte_{{ flotte.id }}" class="catalogue_calendrier">

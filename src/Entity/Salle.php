@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SalleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints as Assert;
@@ -38,6 +39,12 @@ class Salle
 
     #[ORM\OneToMany(targetEntity: EmpruntSalle::class, mappedBy: 'salle',cascade: ['remove'])]
     private Collection $empruntSalles;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $places = null;
+
+    #[ORM\Column( nullable: true)]
+    private ?array $equipements = null;
 
     public function __construct()
     {
@@ -136,6 +143,30 @@ class Salle
                 $empruntSalle->setSalle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPlaces(): ?int
+    {
+        return $this->places;
+    }
+
+    public function setPlaces(?int $places): static
+    {
+        $this->places = $places;
+
+        return $this;
+    }
+
+    public function getEquipements(): ?array
+    {
+        return $this->equipements;
+    }
+
+    public function setEquipements(?array $equipements): static
+    {
+        $this->equipements = $equipements;
 
         return $this;
     }

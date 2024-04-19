@@ -15,9 +15,11 @@
                                 <p> Marque : {{ vehicule.marque.libelle }}</p>
                                 <p> Plaque : {{ vehicule.plaque }}</p>
 
-                                {% if is_granted('ROLE_LOUEUR') %}<a href="{{ path('app_vehicule_details', {'id': vehicule.id}) }}"  >{% endif %}
-                                <button>Réserver un créneau</button>
-                                {% if is_granted('ROLE_LOUEUR') %}</a>{% endif %}
+                                {% if is_granted('ROLE_VEHICULES') %}
+                                <a href="{{ path('app_vehicule_details', {'id': vehicule.id}) }}">
+                                    <button>Réserver un créneau</button>
+                                </a>
+                                {% endif %}
                             </div>
 
                             <div id="vehicules_{{ vehicule.id }}" class="catalogue_calendrier">

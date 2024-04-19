@@ -488,6 +488,7 @@ thead {
 
 .admin_form input,
 .admin_form label,
+.admin_form textarea,
 .admin_form select{
     width: 100%;
     margin: auto;
@@ -499,6 +500,40 @@ thead {
 .admin_form h1 {
     margin-top: -60px;
     margin-left: 50px;
+}
+
+/***************** ROLES ***********************/
+
+.container_role {
+    background-color: #e6eff0;
+    gap: 10px;
+    padding: 40px;
+    border-radius: 10px;
+    width: 80%;
+    margin: auto;
+}
+
+.table_role table{
+    margin: auto auto 30px;
+    border: 1px solid black;
+    border-collapse: collapse;
+    thead td {
+        padding: 4px 15px;
+    }
+    tbody td {
+        padding: 10px 15px;
+    }
+    .long {
+
+    }
+}
+
+.table_role {
+    margin: auto;
+    text-align: center;
+    table, table th, table td {
+        border: 1px solid;
+    }
 }
 
 /***************** INSCRIPTION ***********************/
