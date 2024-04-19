@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+{% block title %}Gestion des rôles{% endblock %}
+{% block body %}
+    <div class="container_role">
+        {{ form_start(form) }}
+        <div  class="table_role">
+            <table>
+                <thead>
+                <tr>
+                    <td rowspan="2">  </td>
+                    <td colspan="6"> Location</td>
+                    <td rowspan="2"><label for="role_centres">{{ form_label(form.centres) }}</label>  </td>
+                    <td rowspan="2"><label for="role_admin">{{ form_label(form.administrateur) }}</label>  </td>
+                </tr>
+                <tr>
+
+                    <td><label for="role_salles">{{ form_label(form.salles) }}</label>  </td>
+                    <td><label for="role_vehicules">{{ form_label(form.vehicules) }}</label>  </td>
+                    <td><label for="role_Kits">{{ form_label(form.kits) }}</label>  </td>
+                    <td><label for="role_pc">{{ form_label(form.pc) }}</label>  </td>
+                    <td><label for="role_flottes">{{ form_label(form.flottes) }}</label>  </td>
+                    <td><label for="role_all">{{ form_label(form.emprunteur) }}</label>  </td>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ user.prenom }} {{ user.nom }} </td>
+                    <td>{{  form_widget(form.salles) }}</td>
+                    <td>{{  form_widget(form.vehicules) }}</td>
+                    <td>{{  form_widget(form.kits) }}</td>
+                    <td>{{  form_widget(form.pc) }}</td>
+                    <td>{{  form_widget(form.flottes) }}</td>
+                    <td>{{  form_widget(form.emprunteur) }}</td>
+                    <td>{{  form_widget(form.centres) }}</td>
+                    <td>{{  form_widget(form.administrateur) }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <button type="submit">Valider les nouveaux rôles</button>
+            <button type="reset">Annuler les modifications</button>
+            <button><a href="{{ path('app_admin_profil') }}">Retourner a la liste d'utilisateurs</a> </button>
+        </div>
+        {{ form_end(form) }}
+
+    </div>
+
+{% endblock %}
