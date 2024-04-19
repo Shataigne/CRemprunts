@@ -52,7 +52,12 @@ class CreateSallesFormType extends AbstractType
                 'class' => Centre::class,
                 'choice_label' => 'libelle',
             ])
-            ->add('places')
+            ->add('places', NumberType::class, [
+                'attr' => [
+                    'min' => '0'
+                ],
+                'html5' => true,
+            ])
             ->add('equipements', TextareaType::class, [
                 'mapped' => false,
                 'required' => false,
