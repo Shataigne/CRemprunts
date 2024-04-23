@@ -5,20 +5,21 @@ namespace App\DataFixtures;
 use App\Entity\Utilisateur;
 use App\Repository\CentreRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
-class UtilisateurFixtures extends Fixture
+class UtilisateurFixtures extends Fixture implements DependentFixtureInterface
 {
     private CentreRepository $centreRepository;
     private UserPasswordHasherInterface $userPasswordHasher;
 
     public function __construct(CentreRepository $centreRepository, UserPasswordHasherInterface $userPasswordHasher)
     {
-        $this->$centreRepository = $centreRepository;
-        $this->$userPasswordHasher = $userPasswordHasher;
+        $this->centreRepository = $centreRepository;
+        $this->userPasswordHasher = $userPasswordHasher;
     }
 
     public function load(ObjectManager $manager,): void
@@ -51,7 +52,7 @@ class UtilisateurFixtures extends Fixture
         for ($i = 0; $i<10; $i++) {
 
             $user = new Utilisateur();
-            $roleR = rand(0, count($centres)-1);
+            $roleR = rand(0, count($roles)-1);
             $user->setRoles([$roles[$roleR]]);
             $user = $this->setUser($user, $faker, $centres);
 
@@ -76,4 +77,12 @@ class UtilisateurFixtures extends Fixture
 
         return $user;
     }
+
+    public function getDependencies(): array
+    {
+        return array(
+            CentreFixtures::class,
+        );
+    }
+
 }
