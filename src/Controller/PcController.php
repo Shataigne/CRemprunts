@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/pc', name: 'app_pc')]
@@ -25,11 +26,20 @@ class PcController extends AbstractController
     public function index(MaterielRepository $materielRepository, Request $request): Response
     {
 
-        $data = new SearchData();
-        $form = $this->createForm(SearchFormType::class, $data);
+        $sdata = new SearchData();
+        $form = $this->createForm(SearchFormType::class, $sdata, [
+            'defaultCentre' => $this->getUser()->getCentre(),
+        ]);
         $form->handleRequest($request);
 
-        $pcs = $materielRepository->findByFilters($data, "ordinateur");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $sdata = $form->getData();
+        } else {
+            $sdata->setCentres($this->getUser()->getCentre());
+
+        }
+
+        $pcs = $materielRepository->findByFilters($sdata, "ordinateur");
 
 
         return $this->render('pc/pc_catalogue.html.twig', [
@@ -38,8 +48,11 @@ class PcController extends AbstractController
         ]);
     }
 
-    #[Route('/details/{id}', name: '_details')]
-    public function details(CentreRepository $centreRepository,Request $request, EntityManagerInterface $entityManager, Materiel $pc): Response
+    #[Route('/details/{id}', name: '_details', requirements: ['id' => '\d+'])]
+    public function details(CentreRepository $centreRepository,
+                            Request $request,
+                            EntityManagerInterface $entityManager,
+                            Materiel $pc, MailerInterface $mailer): Response
     {
         $emprunt = new EmpruntMateriel();
         $materiel = new Materiel;
@@ -58,15 +71,16 @@ class PcController extends AbstractController
                 $entityManager->persist($emprunt);
                 $entityManager->flush();
                 $this->addFlash('success', 'Reservation effectuée !');
+                $nom = $pc->getLibelle();
+                $empruntService->envoieMail($this->getUser(),$emprunt,$nom,$mailer);
             } else {
                 $this->addFlash('error', 'Dates indisponibles');
             }
             return $this->redirectToRoute('app_pc_details',  ['id' => $pc->getId()]);
         } else {
-            $centres = $centreRepository->findAll();
+
             return $this->render('pc/pc_details.html.twig', [
-                'pc' => $pc,
-                'centres' => $centres
+                'pc' => $pc
             ]);
         }
     }

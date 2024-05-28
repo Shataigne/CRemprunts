@@ -33,7 +33,10 @@ class SalleFixtures extends Fixture implements DependentFixtureInterface
             $salle = new Salle();
 
             $salle->setCentre($centres[$centreR]);
-            $salle->setEquipements($faker->randomElements(['projecteur', 'tableau blanc', 'ordinateur', 'machine à café', 'kit de simulation', 'tableau noir', 'écran'], 3));
+            $salle->setEquipements($faker->randomElements(['projecteur', 'tableau blanc',
+                                                            'ordinateur', 'machine à café',
+                                                            'kit de simulation',
+                                                            'tableau noir', 'écran'], 3));
             $salle->setCategorie($categories[$categorieR]);
             $salle->setNumero($faker->numberBetween(1, 30));
             $salle->setEtage($faker->numberBetween(-1, 5));

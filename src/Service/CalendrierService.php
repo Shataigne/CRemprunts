@@ -11,7 +11,7 @@ class CalendrierService
         foreach ($listeEmprunts as $emprunt) {
             $calendarData[] = [
                 'id' => $emprunt->getId(),
-                'title' => $emprunt->getLibelle(),
+                'title' => $emprunt->getDescription() == null || $emprunt->getDescription() == '' ? $emprunt->getLibelle() : $emprunt->getDescription() ,
                 'start' => $emprunt->getDateDebut()->format('Y-m-d H:i:s'),
                 'end' => $emprunt->getDateFin()->format('Y-m-d H:i:s'),
                 'allDay' => $emprunt->isAllDay(),

@@ -1,0 +1,15 @@
+<h1>Bonjour {{ userName }},</h1>
+
+<p>
+    Nous avons bien reçu votre demande d'emprunt de {{emprunt.vehicule.libelle}}. Nous sommes heureux de vous informer que votre demande a été acceptée. Voici les détails de votre emprunt :
+</p>
+<ul>
+    <li>Date de début : {{emprunt.dateDebut.format('j/m/Y H:i')}}</li>
+    <li>Date de fin : {{emprunt.dateFin.format('j/m/Y H:i')}}</li>
+    <li>Élément emprunté : {{emprunt.vehicule.libelle}}</li>
+</ul>
+<p>
+    Si vous avez des questions ou avez besoin de plus d'informations, n'hésitez pas à nous contacter.<br>
+    Cordialement,<br><br>
+    L'équipe Emprunt_CroixRouge
+</p>

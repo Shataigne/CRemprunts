@@ -28,7 +28,8 @@ class SearchFormType extends AbstractType
             'required' => false,
             'class' => Centre::class,
             'expanded' =>false,
-            'multiple' =>false
+            'multiple' =>false,
+            'data' => $options['defaultCentre'],
         ])
         ->add('dispoNow', CheckboxType::class, [
             'label' => 'Disponible maintenant ',
@@ -62,7 +63,8 @@ class SearchFormType extends AbstractType
         $resolver->setDefaults([
             'data_class' => SearchData::class,
             'method' => 'GET',
-            'csrf_protection' => false
+            'csrf_protection' => false,
+            'defaultCentre' => null,
         ]);
     }
 

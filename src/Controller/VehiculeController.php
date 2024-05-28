@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -27,26 +28,34 @@ class VehiculeController extends AbstractController
 {
 
     #[Route('/catalogue', name: '_catalogue')]
-    public function index(VehiculeRepository $vehiculeRepository, Request $request): Response
+    public function index(VehiculeRepository $vehiculeRepository, Request $request, CentreRepository $centreRepository): Response
     {
-
         $sdata = new SearchData();
-        $form = $this->createForm(SearchFormType::class, $sdata);
+        $form = $this->createForm(SearchFormType::class, $sdata, [
+            'defaultCentre' => $this->getUser()->getCentre(),
+        ]);
         $form->handleRequest($request);
 
-        $vehicules = $vehiculeRepository->findByFilters($sdata);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $sdata = $form->getData();
+        } else {
+            $sdata->setCentres($this->getUser()->getCentre());
+
+        }
+        $vehicules = $vehiculeRepository->findByFilters($sdata);
         return $this->render('vehicule/vehi_catalogue.html.twig', [
             'vehicules' => $vehicules,
-            'form' => $form
+            'form' => $form,
         ]);
     }
+
 
     /**
      * @throws Exception
      */
-    #[Route('/details/{id}', name: '_details')]
-    public function details(CentreRepository $centreRepository, Request $request, EntityManagerInterface $entityManager, Vehicule $vehicule): Response
+    #[Route('/details/{id}', name: '_details', requirements: ['id' => '\d+'])]
+    public function details(CentreRepository $centreRepository, Request $request, EntityManagerInterface $entityManager, Vehicule $vehicule,MailerInterface $mailer): Response
     {
         $emprunt = new EmpruntVehicule();
         $emprunt->setEmprunteur($this->getUser());
@@ -73,6 +82,8 @@ class VehiculeController extends AbstractController
                     $entityManager->persist($emprunt);
                     $entityManager->flush();
                     $this->addFlash('success', 'Reservation effectuée !');
+                    $nom = $vehicule->getLibelle();
+                    $empruntService->envoieMail($this->getUser(),$emprunt,$nom,$mailer);
                 };
 
             } else {

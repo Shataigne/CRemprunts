@@ -53,7 +53,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: EmpruntMateriel::class, mappedBy: 'emprunteur')]
     private Collection $empruntMateriels;
 
-    #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
+    #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'utilisateurs')]
     private ?Centre $Centre;
 
     public function __construct()

@@ -42,6 +42,7 @@
                             <ul>
                                 <li><a href="{{ path('app_salles_cours_catalogue') }}">Salles de cours</a></li>
                                 <li><a href="{{ path('app_salles_reunion_catalogue') }}">Salles de réunion</a></li>
+                                <li><a href="{{ path('app_salles_planning') }}">Planning</a></li>
                             </ul>
                         </li>
                         {% if is_granted("ROLE_ADMIN") %}
@@ -55,6 +56,7 @@
                                 <li><a href="{{ path('app_admin_materiel', {'categorie': 'Kit de Simulation'}) }}">Gestion Kits</a></li>
                                 <li><a href="{{ path('app_admin_salles') }}">Gestion Salles</a></li>
                                 <li><a href="{{ path('app_admin_profil') }}">Gestion Utilisateurs</a></li>
+                                <li><a href="{{ path('app_admin_centres') }}">Gestion Centres</a></li>
                             </ul>
                         </li>
                         {% endif %}
@@ -106,6 +108,8 @@
                                         <li><a href="{{ path('app_admin_materiel', {'categorie': 'Kit de Simulation'}) }}">Gestion Kits</a></li>
                                         <li><a href="{{ path('app_admin_salles') }}">Gestion Salles</a></li>
                                         <li><a href="{{ path('app_admin_profil') }}">Gestion Utilisateurs</a></li>
+                                        <li><a href="{{ path('app_admin_centres') }}">Gestion Centres</a></li>
+
                                     </ul>
                                 </li>
                             {% endif %}
@@ -123,17 +127,7 @@
         {% block body %}{% endblock %}
     </main>
     <footer>
-        <section>
-            <a>Comment faire un emprunt</a>
-        </section>
-        <section>
-            <a>Ordinateurs</a>
-            <a>Flottes de pc</a>
-            <a>Kits de Simulation</a>
-            <a>Véhicules</a>
-            <a>Salles de cours</a>
-            <a>Salles de réunion</a>
-        </section>
+
     </footer>
     </body>
 </html>

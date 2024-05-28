@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/kit', name: 'app_kit')]
@@ -24,10 +25,19 @@ class KitController extends AbstractController
     #[Route('/catalogue', name: '_catalogue')]
     public function index(MaterielRepository $materielRepository, Request $request): Response
     {
-        $data = new SearchData();
-        $form = $this->createForm(SearchFormType::class, $data);
+        $sdata = new SearchData();
+        $form = $this->createForm(SearchFormType::class, $sdata, [
+            'defaultCentre' => $this->getUser()->getCentre(),
+        ]);
         $form->handleRequest($request);
-        $kits = $materielRepository->findByFilters($data, "Kit de Simulation");
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $sdata = $form->getData();
+        } else {
+            $sdata->setCentres($this->getUser()->getCentre());
+
+        }
+        $kits = $materielRepository->findByFilters($sdata, "Kit de Simulation");
 
 
         return $this->render('kit/kit_catalogue.html.twig', [
@@ -37,7 +47,7 @@ class KitController extends AbstractController
     }
 
     #[Route('/details/{id}', name: '_details')]
-    public function details(CentreRepository $centreRepository, Request $request, EntityManagerInterface $entityManager, Materiel $kit): Response
+    public function details(CentreRepository $centreRepository, Request $request, EntityManagerInterface $entityManager, Materiel $kit, MailerInterface $mailer): Response
     {
         $emprunt = new EmpruntMateriel();
         $materiel = new Materiel;
@@ -56,7 +66,9 @@ class KitController extends AbstractController
                 $entityManager->persist($emprunt);
                 $entityManager->flush();
                 $this->addFlash('success', 'Reservation effectuée !');
-            } else {
+
+                $nom = $kit->getLibelle();
+                $empruntService->envoieMail($this->getUser(),$emprunt,$nom,$mailer);            } else {
                 $this->addFlash('error', 'Dates indisponibles');
             }
             return $this->redirectToRoute('app_kit_details',  ['id' => $kit->getId()]);

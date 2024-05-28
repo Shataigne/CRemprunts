@@ -14,6 +14,15 @@
                                 <p> Centre : {{ vehicule.centre.libelle }}</p>
                                 <p> Marque : {{ vehicule.marque.libelle }}</p>
                                 <p> Plaque : {{ vehicule.plaque }}</p>
+                                <p> Places : {{ vehicule.places }}<br></p>
+                                <p>
+                                    Equipements :
+                                    <br>
+                                    {% for equipement in vehicule.equipements %}
+                                        -{{ equipement }}-
+                                        <br>
+                                    {% endfor %}
+                                </p>
 
                                 {% if is_granted('ROLE_VEHICULES') %}
                                 <a href="{{ path('app_vehicule_details', {'id': vehicule.id}) }}">

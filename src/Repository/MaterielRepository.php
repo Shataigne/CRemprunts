@@ -82,17 +82,20 @@ class MaterielRepository extends ServiceEntityRepository
         }
 
         if (!empty($search->dispoLe)) {
-            $query->leftJoin('m.empruntMateriels', 'e', 'WITH', 'not((e.dateDebut > :dl AND e.dateFin > :dl) OR (e.dateDebut < :dl AND e.dateFin < :dl))')
+            $query->leftJoin('m.empruntMateriels', 'e', 'WITH',
+                'not((e.dateDebut > :dl AND e.dateFin > :dl) OR (e.dateDebut < :dl AND e.dateFin < :dl))')
                 ->andWhere('e.libelle is null')
                 ->setParameter('dl', $search->dispoLe);
         }elseif (!empty($search->dispoMin) and !empty($search->dispoMax)) {
-            $query->leftJoin('m.empruntMateriels', 'e', 'WITH', 'not((e.dateDebut > :da AND e.dateFin > :da) OR (e.dateDebut < :db AND e.dateFin < :db))')
+            $query->leftJoin('m.empruntMateriels', 'e', 'WITH',
+                'not((e.dateDebut > :da AND e.dateFin > :da) OR (e.dateDebut < :db AND e.dateFin < :db))')
                 ->andWhere('e.libelle is null')
                 ->setParameter('db', $search->dispoMin)
                 ->setParameter('da', $search->dispoMax);
         } elseif (!empty($search->dispoNow)) {
             if ( $search->dispoNow === true) {
-                $query->leftJoin('m.empruntMateriels', 'e', 'WITH', 'not((e.dateDebut > :dn AND e.dateFin > :dn) OR (e.dateDebut < :dn AND e.dateFin < :dn))')
+                $query->leftJoin('m.empruntMateriels', 'e', 'WITH',
+                    'not((e.dateDebut > :dn AND e.dateFin > :dn) OR (e.dateDebut < :dn AND e.dateFin < :dn))')
                     ->andWhere('e.libelle is null')
                     ->setParameter('dn', new \DateTime());
             }

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste Marques {{ type }}{% endblock %}
+
+
+{% block body %}
+    <div class="admin_container">
+        <table class="admin_table">
+            <thead>
+            <tr>
+                <th>Marque</th>
+                <th>Modifier</th>
+                <th>Supprimer</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th colspan="1">
+                        <form action="{{ path('app_admin_'~ type ~'_marque', {'action': 'ajouter'}) }}" method="post" >
+                            <input name='libelle' type="text" placeholder="Nouvelle marque">
+                            <input type="submit" value="Ajouter">
+                        </form>
+                    </th>
+                    <th></th>
+                    <th></th>
+
+                </tr>
+            {% for marque in marques %}
+                <tr>
+                    <th>{{ marque.libelle }}</th>
+                    <th>
+                        <form action="{{  path('app_admin_'~ type ~'_marque', {'action': 'modifier', 'id': marque.id}) }}" method="post" >
+                            <input name='nouveau_libelle' type="text" placeholder="Modifier la marque">
+                            <input type="submit" value="Modifier">
+                        </form>
+                    </th>
+                    <th>
+                        <form action="{{  path('app_admin_'~ type ~'_marque', {'action': 'supprimer', 'id': marque.id}) }}" method="post" >
+                            <input name='supprimer' type="submit" value="Supprimer"  onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette marque ?')" >
+                        </form>
+                    </th>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
+
+

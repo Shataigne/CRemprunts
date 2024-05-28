@@ -12,6 +12,15 @@
                                 <p> {{ salle.centre.libelle }}<br></p>
                                 <p>  Batiment : {{ salle.batiment }}<br></p>
                                 <p> Etage : {{ salle.etage }}<br></p>
+                                <p> Places : {{ salle.places }}<br></p>
+                                <p>
+                                    Equipements :
+                                    <br>
+                                    {% for equipement in salle.equipements %}
+                                        -{{ equipement }}-
+                                        <br>
+                                    {% endfor %}
+                                </p>
                                 {% if is_granted('ROLE_SALLES') %}
                                 <a href="{{ path('app_salles_details', {'id': salle.id}) }}">
                                     <button>Réserver un créneau</button>

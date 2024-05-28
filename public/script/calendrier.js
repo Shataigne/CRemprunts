@@ -1,24 +1,20 @@
 
 export function fetchCalendarData(categorie, id) {
-    // Fetch calendar data from the server using the vehicleId
-    // Return a Promise that resolves with the calendar data
+
     return fetch(`/CRemprunts/public/${categorie}/api/${id}/calendar`)
         .then((response) => {
             if (!response.ok) {
                 throw new Error('Failed to fetch calendar data');
             }
-            // Store the response in a variable
             const calendarResponse = response;
-            // Return a new Promise that resolves with the calendar data
+
             return new Promise((resolve, reject) => {
-                // Call the 'json()' method on the response variable
+
                 calendarResponse.json()
                     .then((calendarData) => {
-                        // Resolve the Promise with the calendar data
                         resolve(calendarData);
                     })
                     .catch((error) => {
-                        // Reject the Promise with the error
                         reject(error);
                     });
             });
@@ -65,13 +61,11 @@ export function initializeCalendar(calendarElt, data) {
         },
     };
 
-    // Initialize the calendar with the configuration object
     const calendar = new FullCalendar.Calendar(calendarElt, calendarConfig);
 
     return calendar;
 }
 
-// Function to render the calendar
 export function renderCalendar(calendar) {
     // Render the calendar
     calendar.render();

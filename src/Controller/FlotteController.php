@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/flotte', name: 'app_flottes')]
@@ -24,11 +25,19 @@ class FlotteController extends AbstractController
     #[Route('/catalogue', name: '_catalogue')]
     public function listFlottes(MaterielRepository $materielRepository, Request $request): Response
     {
-        $data = new SearchData();
-        $form = $this->createForm(SearchFormType::class, $data);
+        $sdata = new SearchData();
+        $form = $this->createForm(SearchFormType::class, $sdata, [
+            'defaultCentre' => $this->getUser()->getCentre(),
+        ]);
         $form->handleRequest($request);
 
-        $flottes = $materielRepository->findByFilters($data, "Flotte de PC");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $sdata = $form->getData();
+        } else {
+            $sdata->setCentres($this->getUser()->getCentre());
+
+        }
+        $flottes = $materielRepository->findByFilters($sdata, "Flotte de PC");
 
 
         return $this->render('flotte/flottes_catalogue.html.twig', [
@@ -38,7 +47,7 @@ class FlotteController extends AbstractController
     }
 
     #[Route('/details/{id}', name: '_details')]
-    public function details(CentreRepository $centreRepository, Request $request, EntityManagerInterface $entityManager, Materiel $flotte): Response
+    public function details(CentreRepository $centreRepository, Request $request, EntityManagerInterface $entityManager, Materiel $flotte, MailerInterface $mailer): Response
     {
         $emprunt = new EmpruntMateriel();
         $materiel = new Materiel();
@@ -57,7 +66,9 @@ class FlotteController extends AbstractController
                 $entityManager->persist($emprunt);
                 $entityManager->flush();
                 $this->addFlash('success', 'Reservation effectuée !');
-            } else {
+                $nom = $flotte->getLibelle();
+                $empruntService->envoieMail($this->getUser(),$emprunt,$nom,$mailer);
+           } else {
                 $this->addFlash('error', 'Dates indisponibles');
             }
             return $this->redirectToRoute('app_flottes_details',  ['id' => $flotte->getId()]);

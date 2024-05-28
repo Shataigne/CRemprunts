@@ -3,16 +3,20 @@
 namespace App\Controller;
 
 
+use App\Entity\Centre;
+use App\Entity\Marque;
 use App\Entity\Materiel;
 use App\Entity\Salle;
 use App\Entity\Utilisateur;
 use App\Entity\Vehicule;
+use App\Form\CreateCentresFormType;
 use App\Form\CreateMaterielFormType;
 use App\Form\CreateSallesFormType;
 use App\Form\CreateVehiculeType;
 use App\Form\GestionRolesFormType;
 use App\Form\profilModificationFormType;
 use App\Repository\CategorieRepository;
+use App\Repository\CentreRepository;
 use App\Repository\MarqueRepository;
 use App\Repository\MaterielRepository;
 use App\Repository\SalleRepository;
@@ -96,6 +100,57 @@ class AdminController extends AbstractController
         $entityManager->flush();$this->addFlash('succes', 'Vehicule supprimé avec succès');
         return $this->redirectToRoute('app_admin_vehicules');
     }
+
+    #[Route('/vehicule/marque', name: '_vehicules_marque')]
+    public function createMarque(EntityManagerInterface $entityManager, Request $request, MarqueRepository $marqueRepository): Response
+    {
+
+        $action = $request->query->get('action');
+
+        switch ($action) {
+            case 'supprimer':
+                $marqueId = $request->query->get('id');
+                $marque = $marqueRepository->find($marqueId);
+                if ($marque) {
+                    $entityManager->remove($marque);
+                    $entityManager->flush();
+                }
+                break;
+
+            case 'ajouter':
+                $nom = strtoupper($request->request->get('libelle'));
+                if ($nom) {
+                    $marque = new Marque();
+                    $marque->setLibelle($nom);
+                    $marque->setType('VEHI');
+                    $entityManager->persist($marque);
+                    $entityManager->flush();
+                }
+                break;
+            case 'modifier':
+                $marqueId = $request->query->get('id');
+                $marque = $marqueRepository->find($marqueId);
+                $nouveauNom = strtoupper($request->request->get('nouveau_libelle'));
+                if ($marque && $nouveauNom) {
+                    $marque->setLibelle($nouveauNom);
+                    $entityManager->persist($marque);
+                    $entityManager->flush();
+                }
+                break;
+            default:
+                $marques = $marqueRepository->findBy(['type' => 'VEHI']);
+        }
+
+        if(!empty($marques)){
+            return $this->render('admin/vehi_marque.html.twig', ['marques' => $marques, 'type' => 'vehicules']);
+        }else{
+            return $this->redirectToRoute('app_admin_vehicules_marque');
+        }
+
+    }
+
+
+
 
 
     #[Route('/salles', name: '_salles')]
@@ -236,6 +291,55 @@ class AdminController extends AbstractController
     }
 
 
+    #[Route('/materiels/marque', name: '_materiels_marque')]
+    public function createMarqueMat(EntityManagerInterface $entityManager, Request $request, MarqueRepository $marqueRepository): Response
+    {
+
+        $action = $request->query->get('action');
+
+        switch ($action) {
+            case 'supprimer':
+                $marqueId = $request->query->get('id');
+                $marque = $marqueRepository->find($marqueId);
+                if ($marque) {
+                    $entityManager->remove($marque);
+                    $entityManager->flush();
+                }
+                break;
+
+            case 'ajouter':
+                $nom = strtoupper($request->request->get('libelle'));
+                if ($nom) {
+                    $marque = new Marque();
+                    $marque->setLibelle($nom);
+                    $marque->setType('INFO');
+                    $entityManager->persist($marque);
+                    $entityManager->flush();
+                }
+                break;
+            case 'modifier':
+                $marqueId = $request->query->get('id');
+                $marque = $marqueRepository->find($marqueId);
+                $nouveauNom = strtoupper($request->request->get('nouveau_libelle'));
+                if ($marque && $nouveauNom) {
+                    $marque->setLibelle($nouveauNom);
+                    $entityManager->persist($marque);
+                    $entityManager->flush();
+                }
+                break;
+            default:
+                $marques = $marqueRepository->findBy(['type' => 'INFO']);
+        }
+
+        if(!empty($marques)){
+            return $this->render('admin/vehi_marque.html.twig', ['marques' => $marques, 'type' => 'materiels']);
+        }else{
+            return $this->redirectToRoute('app_admin_materiels_marque');
+        }
+
+    }
+
+
     #[Route('/profil', name: '_profil')]
     public function gestionUtilisateurs(UtilisateurRepository $utilisateurRepository): Response
     {
@@ -330,6 +434,73 @@ class AdminController extends AbstractController
         $this->addFlash('succes', ' Utilisateur supprimé avec succès');
         return $this->redirectToRoute('app_admin_profil');
     }
+
+
+
+    #[Route('/centres', name: '_centres')]
+    public function gestionCentres(EntityManagerInterface $entityManager, Request $request, CentreRepository $centreRepository): Response
+    {
+
+        $action = $request->query->get('action');
+
+        switch ($action) {
+            case 'supprimer':
+                $centreId = $request->query->get('id');
+                $centre = $centreRepository->find($centreId);
+                if ($centre) {
+                    $entityManager->remove($centre);
+                    $entityManager->flush();
+                }
+                break;
+
+            case 'ajouter':
+                $nom = $request->request->get('nom');
+                $numero = $request->request->get('numero');
+                $rue = $request->request->get('rue');
+                $cpo = $request->request->get('cpo');
+                $ville = $request->request->get('ville');
+                if ($nom) {
+                    $centre = new Centre();
+                    $centre->setLibelle($nom);
+                    $centre->setNumero($numero);
+                    $centre->setrue($rue);
+                    $centre->setcpo($cpo);
+                    $centre->setville($ville);
+                    $entityManager->persist($centre);
+                    $entityManager->flush();
+                }
+                break;
+            default:
+                $centres = $centreRepository->findAll();
+        }
+
+        if(!empty($centres)){
+            return $this->render('admin/centres.html.twig', ['centres' => $centres]);
+        }else{
+            return $this->redirectToRoute('app_admin_centres');
+        }
+
+    }
+
+    #[Route('/centres/modifier/{id}', name: '_centres_modifier')]
+    public function modifierCentre(Centre $centre, EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $form = $this->createForm(CreateCentresFormType::class, $centre);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($centre);
+            $entityManager->flush();
+            $this->addFlash('succes', 'centre modifiée avec succès');
+            return $this->redirectToRoute('app_admin_centres');
+
+        }
+
+        return $this->render('admin/centre_modification.html.twig', [
+            'form' => $form,
+            'centre' => $centre,
+        ]);
+    }
+
 
 
 }

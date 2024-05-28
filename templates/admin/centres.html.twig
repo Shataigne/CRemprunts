@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste Centres{% endblock %}
+
+
+{% block body %}
+    <div class="admin_container">
+        <table class="admin_table">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Numero</th>
+                <th>rue</th>
+                <th>code postal</th>
+                <th>ville</th>
+                <th colspan="2">administration</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th>
+                    <form action="{{ path('app_admin_centres', {'action': 'ajouter'}) }}" method="post" >
+                        <input name='nom' type="text" placeholder="nom du centre">
+                        <input name='numero' type="number" placeholder="6">
+                        <input name='rue' type="text" placeholder="rue Paul Bellamy">
+                        <input name='cpo' type="text" placeholder="44000">
+                        <input name='ville' type="text" placeholder="Nantes">
+
+                        <button type="submit" >Ajouter un centre</button>
+                    </form>
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th colspan="2"></th>
+
+            </tr>
+            {% for centre in centres %}
+                <tr>
+                    <th>{{ centre.libelle }}</th>
+                    <th>{{ centre.numero }}</th>
+                    <th>{{ centre.rue }}</th>
+                    <th>{{ centre.cpo }}</th>
+                    <th>{{ centre.ville }}</th>
+                    <th>
+                        <a href="{{  path('app_admin_centres_modifier', {'id': centre.id}) }}"><button>Modifier</button></a>
+                    </th>
+                    <th>
+                        <form action="{{  path('app_admin_centres', {'action': 'supprimer', 'id': centre.id}) }}" method="post" >
+                            <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce centre ?')">Supprimer</button>
+                        </form>
+                    </th>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

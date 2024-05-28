@@ -19,8 +19,6 @@ class SearchData
 
     /**
      * @var string[]
-     */
-    public array $modeles = [];
 
     /**
      * @var Centre
@@ -35,6 +33,11 @@ class SearchData
     public ?DateTime $dispoMin;
 
     public ?DateTime $dispoMax;
+
+    public function setCentres(Centre $centre): void
+    {
+        $this->centres = $centre;
+    }
 
 
 }

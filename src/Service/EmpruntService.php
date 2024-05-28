@@ -4,6 +4,10 @@ namespace App\Service;
 
 use DateInterval;
 use DateTime;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 
 class EmpruntService
 {
@@ -18,7 +22,6 @@ class EmpruntService
                 $heureDebut = DateInterval::createFromDateString($request->request->get('h_heureDebut'));
                 $heureFin = DateInterval::createFromDateString($request->request->get('h_heureFin'));
                 $allDay = false;
-
                 break;
             case 'jour':
                 $dateDebut = new DateTime($request->request->get('j_date'));
@@ -80,6 +83,27 @@ class EmpruntService
             }
         }
         return $disponibilite;
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function envoieMail($user, $emprunt, $nom, MailerInterface $mailer): void
+    {
+        $email = (new TemplatedEmail())
+            ->from(new Address('emprunt@croix-rouge.com', 'Emprunt_CroixRouge'))
+            ->to($user->getEmail())
+            ->subject('Récapitulatif de votre emprunt pour le '. $emprunt->getDateDebut()->format('j/m/Y H:i') )
+            ->htmlTemplate('email.html.twig' )
+            ->context([
+                'userName' =>$user->getPrenom() . ' ' . $user->getNom(),
+                'emprunt' => $emprunt,
+                'nom' => $nom,
+            ])
+
+        ;
+
+        $mailer->send($email);
     }
 
 }

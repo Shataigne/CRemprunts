@@ -8,33 +8,48 @@
             <h2>Recherche rapide :</h2>
 
         </section>
-        <div class="recherche">
+        <div class="recherche_container">
             {{ form_start(form) }}
-            {{ form_label(form.action) }}
-            {{ form_widget(form.action) }}
-
-            {{ form_label(form.q) }}
-            {{ form_widget(form.q) }}
-
-            {{ form_label(form.centres) }}
-            {{ form_widget(form.centres) }}
-
-            {{ form_label(form.dispoNow) }}
-            {{ form_widget(form.dispoNow) }}
-
-            {{ form_label(form.dispoLe) }}
-            {{ form_widget(form.dispoLe) }}
-
-            {{ form_label(form.dispoMin) }}
-            {{ form_widget(form.dispoMin) }}
-
-            {{ form_label(form.dispoMax) }}
-            {{ form_widget(form.dispoMax) }}
-
-            <button type="submit">Recherche</button>
+            <div class="recherche">
+                <div class="recherche_card">
+                    <div class="recherche_row">
+                        <div>
+                            {{ form_label(form.action) }}
+                            {{ form_widget(form.action) }}
+                        </div>
+                        <div>
+                            {{ form_label(form.q) }}
+                            {{ form_widget(form.q) }}
+                        </div>
+                        <div>
+                            {{ form_label(form.centres) }}
+                            {{ form_widget(form.centres) }}
+                        </div>
+                    </div>
+                    <div class="recherche_row">
+                        <div>
+                            {{ form_label(form.dispoNow) }}
+                            {{ form_widget(form.dispoNow) }}
+                        </div>
+                        <div>
+                            {{ form_label(form.dispoLe) }}
+                            {{ form_widget(form.dispoLe) }}
+                        </div>
+                        <div>
+                            {{ form_label(form.dispoMin) }}
+                            {{ form_widget(form.dispoMin) }}
+                        </div>
+                        <div>
+                            {{ form_label(form.dispoMax) }}
+                            {{ form_widget(form.dispoMax) }}
+                        </div>
+                    </div>
+                </div>
+                <button type="submit">Recherche</button>
+            </div>
             {{ form_end(form) }}
-
         </div>
+
         <hr />
         <a href="{{ path('app_vehicule_catalogue') }}">
             <div class="home_card" >
@@ -52,7 +67,7 @@
         <a href="{{ path('app_kit_catalogue') }}">
             <div class="home_card" style="background-color: #e6eff0">
                 <div class="home_img">
-                    <img src="{{ asset('image/logo_type.png') }}">
+                    <img src="{{ asset('image/logo_kit.webp') }}">
                 </div>
 
                 <div class="home_info">
@@ -71,7 +86,7 @@
                     <p class="icon">></p>
                 </div>
                 <div class="home_img">
-                    <img src="{{ asset('image/logo_type.png') }}">
+                    <img src="{{ asset('image/logo_pc.png') }}">
                 </div>
             </div>
         </a>

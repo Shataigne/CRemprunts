@@ -15,7 +15,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use function Sodium\add;
+use function Symfony\Component\Clock\now;
 
 #[Route('/salle', name: 'app_salles')]
 class SalleController extends AbstractController
@@ -25,11 +28,20 @@ class SalleController extends AbstractController
     #[Route('/cours', name: '_cours_catalogue')]
     public function listSalleCours(SalleRepository $salleRepository, Request $request): Response
     {
-        $data = new SearchData();
-        $form = $this->createForm(SearchFormType::class, $data);
+        $sdata = new SearchData();
+        $form = $this->createForm(SearchFormType::class, $sdata, [
+            'defaultCentre' => $this->getUser()->getCentre(),
+        ]);
         $form->handleRequest($request);
 
-        $salles = $salleRepository->findByFilters($data, "CRS");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $sdata = $form->getData();
+        } else {
+            $sdata->setCentres($this->getUser()->getCentre());
+
+        }
+
+        $salles = $salleRepository->findByFilters($sdata, "CRS");
 
         return $this->render('salle/salle_catalogue.html.twig', ["salles"=>$salles, "form"=>$form]);
     }
@@ -42,17 +54,25 @@ class SalleController extends AbstractController
     #[Route('/reunion', name: '_reunion_catalogue')]
     public function listSalleReunion(SalleRepository $salleRepository, Request $request): Response
     {
-        $data = new SearchData();
-        $form = $this->createForm(SearchFormType::class, $data);
+        $sdata = new SearchData();
+        $form = $this->createForm(SearchFormType::class, $sdata, [
+            'defaultCentre' => $this->getUser()->getCentre(),
+        ]);
         $form->handleRequest($request);
 
-        $salles = $salleRepository->findByFilters($data, "REU");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $sdata = $form->getData();
+        } else {
+            $sdata->setCentres($this->getUser()->getCentre());
+
+        }
+        $salles = $salleRepository->findByFilters($sdata, "REU");
 
         return $this->render('salle/salle_catalogue.html.twig', ["salles"=>$salles, "form"=>$form]);
     }
 
     #[Route('/details/{id}', name: '_details')]
-    public function details(CentreRepository $centreRepository, Request $request, EntityManagerInterface $entityManager, Salle $salle): Response
+    public function details(CentreRepository $centreRepository, Request $request, EntityManagerInterface $entityManager, Salle $salle, MailerInterface $mailer): Response
     {
         $emprunt = new EmpruntSalle();
         $emprunt ->setEmprunteur($this->getUser());
@@ -70,6 +90,9 @@ class SalleController extends AbstractController
                 $entityManager->persist($emprunt);
                 $entityManager->flush();
                 $this->addFlash('success', 'Reservation effectuée !');
+
+                $nom = 'salle numéro '.$salle->getNumero();
+                $empruntService->envoieMail($this->getUser(),$emprunt,$nom,$mailer);
             } else {
                 $this->addFlash('error', 'Dates indisponibles');
             }
@@ -82,6 +105,20 @@ class SalleController extends AbstractController
             ]);
         }
     }
+
+    #[Route('/planning', name: '_planning')]
+    public function planningSalles(SalleRepository $salleRepository, Request $request): Response
+    {
+
+        $salles = $salleRepository->findBy(['centre' => $this->getUser()->getCentre()]);
+        $now = new \DateTime();
+
+        $debutSemaine = clone $now->modify('Monday this week');
+        $finSemaine = clone $now->modify('Sunday this week');
+
+        return $this->render('salle/salle_planning.html.twig', ["salles"=>$salles, 'debutSemaine'=>$debutSemaine->format('l d F Y'), 'finSemaine'=>$finSemaine->format('l d F Y')]);
+    }
+
 
 
     #[Route('/api/{id}/calendar', name: 'api_calendar', methods: ['GET'])]

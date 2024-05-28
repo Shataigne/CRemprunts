@@ -58,15 +58,19 @@ class SalleRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByFilters(SearchData $search, string $type)
+    public function findByFilters(SearchData $search, ?string $type)
     {
         $query = $this
             ->createQueryBuilder('s')
             ->select('c','e','s')
             ->leftjoin('s.centre', 'c')
-            ->leftJoin('s.empruntSalles','e')
-            ->andWhere('s.categorie = :type')
-            ->setParameter('type',"$type");
+            ->leftJoin('s.empruntSalles','e');
+
+        if (!empty($type)) {
+            $query = $query
+                ->andWhere('s.categorie = :type')
+                ->setParameter('type', "$type");
+        }
 
         if (!is_null($search->q)) {
             $query->andWhere('s.numero LIKE :q or s.batiment LIKE :q or s.etage LIKE :q')

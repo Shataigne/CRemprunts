@@ -16,9 +16,11 @@
 
                         <label for="libelle">description courte :</label>
                         <select id="libelle" name="libelle">
-                            {% for centre in centres %}
-                                <option>{{ app.user.nom }} intervention {{ centre.libelle }}</option>
-                            {% endfor %}
+                            <option>{{ app.user.nom }} {{ app.user.prenom }}, pour formation.</option>
+                            <option>{{ app.user.nom }} {{ app.user.prenom }}, pour usage à domicile.</option>
+                            <option>{{ app.user.nom }} {{ app.user.prenom }}, pour reunion.</option>
+                            <option>{{ app.user.nom }} {{ app.user.prenom }}, pour autre.</option>
+
                         </select>
                         <label for="h_date">date :</label>
                         <input id="h_date" name="h_date" type="date" value="{{ date('now')|date('Y-m-d') }}" min="{{ date('now')|date('Y-m-d') }}">
@@ -52,9 +54,11 @@
                     <div>
                         <label for="libelle">description courte :</label>
                         <select id="libelle" name="libelle">
-                            {% for centre in centres %}
-                                <option>{{ app.user.nom }} intervention {{ centre.libelle }}</option>
-                            {% endfor %}
+                                <option>{{ app.user.nom }} {{ app.user.prenom }}, pour formation.</option>
+                                <option>{{ app.user.nom }} {{ app.user.prenom }}, pour usage à domicile.</option>
+                                <option>{{ app.user.nom }} {{ app.user.prenom }}, pour reunion.</option>
+                                <option>{{ app.user.nom }} {{ app.user.prenom }}, pour autre.</option>
+
                         </select>
 
                         <label for="j_date">date :</label>
@@ -69,9 +73,10 @@
 
                         <label for="libelle">description courte :</label>
                         <select id="libelle" name="libelle">
-                            {% for centre in centres %}
-                                <option>{{ app.user.nom }} intervention {{ centre.libelle }}</option>
-                            {% endfor %}
+                            <option>{{ app.user.nom }} {{ app.user.prenom }}, pour formation.</option>
+                            <option>{{ app.user.nom }} {{ app.user.prenom }}, pour usage à domicile.</option>
+                            <option>{{ app.user.nom }} {{ app.user.prenom }}, pour reunion.</option>
+                            <option>{{ app.user.nom }} {{ app.user.prenom }}, pour autre.</option>
                         </select>
                         <label for="l_dateDebut">date debut :</label>
                         <input id="l_dateDebut" name="l_dateDebut" type="date" value="{{ date('now')|date('Y-m-d') }}" min="{{ date('now')|date('Y-m-d') }}">

@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Panning Salles{% endblock %}
+
+{% block body %}
+    <section class="planning_titre">
+        <h1>{{ app.user.centre.libelle }}</h1>
+    </section>
+    {% if salles is not empty %}
+        {% for salle in salles %}
+
+            <div class="planning_card">
+                <div class="planning_info">
+                    <h2>Planning de la salle n {{ salle.numero }}</h2>
+                    <p> {{ salle.centre.libelle }}</p>
+                    <p>  Batiment : {{ salle.batiment }}</p>
+                    <p> Etage : {{ salle.etage }}</p>
+                    <p> Places : {{ salle.places }}</p>
+                    <p>
+                        Les équipements disponibles dans cette sont : <br>
+                        {% for equipement in salle.equipements %}
+                            {{ equipement }}<br>
+                        {% endfor %}
+                    </p>
+                </div>
+                <div class="planning_tableau">
+                    <p>Du {{ debutSemaine }} au {{ finSemaine }} </p>
+
+                    <div>
+                        {{ debutSemaine|date('l d F ')}}
+                    </div>
+                    <div>
+                        {{ debutSemaine|date_modify("+" ~ 1 ~ " days")|date('l d F ') }}
+                    </div>
+                    <div>
+                        {{ debutSemaine|date_modify("+" ~ 2 ~ " days")|date('l d F ') }}
+                    </div>
+                    <div>
+                        {{ debutSemaine|date_modify("+" ~ 3 ~ " days")|date('l d F ') }}
+                    </div>
+                    <div>
+                        {{ debutSemaine|date_modify("+" ~ 4 ~ " days")|date('l d F ') }}
+                    </div>
+                    <div>
+                        {{ debutSemaine|date_modify("+" ~ 5 ~ " days")|date('l d F ') }}
+                    </div>
+                    <div>
+                        {{ debutSemaine|date_modify("+" ~ 6 ~ " days")|date('l d F ') }}
+                    </div>
+                    <div>
+                        {% for emprunt in salle.empruntSalles %}
+                            {% if emprunt.isAllDay %}
+                                fiche all day {{ emprunt.libelle }}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div>
+
+                        {% for emprunt in salle.empruntSalles %}
+                            {% if not emprunt.isAllDay %}
+                                fiche sur la journée  {{ emprunt.libelle }}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+
+        {% endfor %}
+    {% else %}
+        <div class="catalogue_card">
+            Il n'y pas de salles dans ce centre. !
+        </div>
+    {% endif %}
+{% endblock %}

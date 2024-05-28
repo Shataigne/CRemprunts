@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier {{ centre.libelle }}{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    <div class="admin_form">
+        {{ form_row(form.libelle) }}
+        {{ form_row(form.numero) }}
+        {{ form_row(form.rue) }}
+        {{ form_row(form.cpo) }}
+        {{ form_row(form.ville) }}
+        <div>
+            <button type="submit">Modifier</button>
+            <a href="{{ path('app_admin_centres') }}"><button>Annuler</button></a>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+{% endblock %}
+

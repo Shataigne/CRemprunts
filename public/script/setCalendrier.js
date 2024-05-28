@@ -9,14 +9,14 @@ import { initializeCalendar, renderCalendar, fetchCalendarData} from './calendri
 
         fetchCalendarData(categorie, id)
             .then((calendarData) => {
-                // Initialize the calendar for the current vehicle
+
                 const calendar = initializeCalendar(calendarElt, calendarData);
-                // Render the calendar for the current vehicle
+
                 renderCalendar(calendar);
 
             })
             .catch((error) => {
-                // Handle any errors that occur during the data fetching process
+
                 console.error(error);
             });
     });

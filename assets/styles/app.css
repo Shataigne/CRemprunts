@@ -82,7 +82,6 @@ header nav {
     padding: 20px;
 }
 
-
 .nav_logo {
     display: flex;
     font-weight: bold;
@@ -91,7 +90,6 @@ header nav {
         margin: 20px 15px 15px;
     }
 }
-
 
 .nav ul {
     z-index: 20;
@@ -150,8 +148,6 @@ header nav {
         }
     }
 }
-
-
 
 
 
@@ -234,7 +230,8 @@ footer {
     margin-top: 50px;
     width: 30%;
     img {
-        width: 120%;
+        margin-top: -50px;
+        width: 100%;
         transition: all .4s ease-in-out;
     }
 }
@@ -268,7 +265,7 @@ footer {
 }
 
 
-.recherche {
+.recherche_container {
     width: 60%;
     background-color: white;
     border: double 4px #970b13;
@@ -277,6 +274,39 @@ footer {
     gap: 30px;
     padding: 30px;
     margin-bottom: -100px;
+
+}
+
+.recherche{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 10px;
+    align-items: center;
+    .recherche_card {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        gap: 40px;
+    }
+    .recherche_row {
+        width: 50%;
+        gap: 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        div {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+    input,select {
+        width: 50%;
+    }
+    button {
+        width: 60%;
+    }
 
 }
 
@@ -340,7 +370,8 @@ footer {
 
 @media screen and (max-width: 1060px){
 
-    .catalogue_container {
+    .catalogue_container,
+    .catalogue_card {
         flex-direction: column;
         align-items: center;
     }
@@ -350,10 +381,6 @@ footer {
         width: 80vw;
     }
 
-    .catalogue_card {
-        flex-direction: column;
-        align-items: center;
-    }
 
     .catalogue_calendrier,
     .catalogue_info {
@@ -607,6 +634,11 @@ thead {
 
 @media screen and (max-width: 800px) {
 
+    main {
+        margin-top: 100px;
+    }
+
+
     .petite_nav {
         display: flex;
     }
@@ -629,7 +661,6 @@ thead {
 
     a {
         text-decoration: none;
-        color: #1E1E23;
         opacity:1;
         font-family: 'work sans', sans serif;
         font-size: 1.5em;
@@ -745,6 +776,31 @@ thead {
     {
         transform: none;
     }
+
+    .catalogue_filtres {
+        a {
+            font-size: 1rem;
+        }
+    }
+
+
+    .catalogue_calendrier {
+        width: 100%;
+        height: 480px;
+        a {
+        font-size: 1rem;
+        font-weight: bold;
+        }
+    }
+
+    .recherche_container {
+        width: 90%;
+    }
+
+    .home_img img {
+        margin-top: 20px;
+    }
+
 
 
 }
